@@ -4,6 +4,7 @@ type PublicTable<Row, Insert, Update = Partial<Insert>> = {
   Row: Row;
   Insert: Insert;
   Update: Update;
+  Relationships: [];
 };
 
 export type Database = {

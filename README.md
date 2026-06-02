@@ -131,6 +131,42 @@ values ('USER_ID_DO_AUTH', 'owner');
 
 Não use a anon key para ações administrativas.
 
+### Supabase Auth
+
+No painel Supabase, configure Authentication com e-mail/senha e adicione as URLs de redirect:
+
+```text
+http://localhost:3000/auth/callback
+http://localhost:3000/onboarding
+http://localhost:3000/radar
+```
+
+Em produção, adicione os mesmos caminhos no domínio final, por exemplo:
+
+```text
+https://seu-dominio.com/auth/callback
+https://seu-dominio.com/onboarding
+https://seu-dominio.com/radar
+```
+
+Fluxo esperado:
+
+- `/cadastro` cria usuário no Supabase Auth, envia `full_name` como metadata e salva `terms_accepted_at` e `privacy_accepted_at` no `profile`.
+- `/login` autentica com Supabase Auth e redireciona para `/onboarding` ou `/radar`.
+- `/onboarding` salva `profiles.city`, `profiles.state`, `profiles.education_level`, marca `onboarding_completed = true` e faz upsert em `user_preferences`.
+- `/logout` encerra a sessão e redireciona para `/login`.
+- `/admin` fica bloqueado até o usuário autenticado existir em `admin_users`.
+
+Para criar o primeiro owner:
+
+```sql
+select id, email from auth.users order by created_at desc;
+
+insert into public.admin_users (user_id, role)
+values ('COLE_AQUI_O_ID_DO_USUARIO', 'owner')
+on conflict (user_id) do update set role = 'owner';
+```
+
 ## Scripts
 
 ```bash

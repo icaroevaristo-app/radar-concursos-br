@@ -6,6 +6,7 @@ type ButtonProps = {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  formAction?: string | ((formData: FormData) => void | Promise<void>);
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "outline" | "ghost";
@@ -39,7 +40,13 @@ export function Button(props: ButtonProps | ButtonLinkProps) {
   }
 
   return (
-    <button className={className} disabled={props.disabled} onClick={props.onClick} type={props.type}>
+    <button
+      className={className}
+      disabled={props.disabled}
+      formAction={props.formAction}
+      onClick={props.onClick}
+      type={props.type}
+    >
       {props.children}
     </button>
   );
