@@ -102,7 +102,7 @@ A migration principal está em:
 supabase/migrations/0001_sprint_1_foundation.sql
 ```
 
-Ela cria as tabelas da Sprint 1, funções auxiliares, triggers, RLS e policies. Não cria crawler, IA, pagamento ou notificações reais.
+Ela cria as tabelas da Sprint 1, funções auxiliares, triggers, RLS e policies. A migration `supabase/migrations/0002_fix_profiles_signup_flow.sql` reforça o trigger de criação de `profiles` após signup e os grants seguros para `service_role`. Não cria crawler, IA, pagamento ou notificações reais.
 
 ### Aplicar seed demo
 
@@ -156,6 +156,14 @@ Fluxo esperado:
 - `/onboarding` salva `profiles.city`, `profiles.state`, `profiles.education_level`, marca `onboarding_completed = true` e faz upsert em `user_preferences`.
 - `/logout` encerra a sessão e redireciona para `/login`.
 - `/admin` fica bloqueado até o usuário autenticado existir em `admin_users`.
+
+Em desenvolvimento local, deixe `Authentication > Providers > Email > Confirm email` como `OFF` para testar cadastro, login e onboarding no mesmo fluxo. Se a confirmação de e-mail ficar ativa, o usuário pode ser criado sem uma sessão imediata; nesse caso, mantenha `SUPABASE_SERVICE_ROLE_KEY` configurada apenas no servidor para permitir salvar os aceites no `profile`.
+
+Se o cadastro criar o usuário no Auth mas falhar em `profiles` com erro RLS (`42501`), verifique:
+
+- `SUPABASE_SERVICE_ROLE_KEY` existe em `.env.local`.
+- O servidor Next.js foi reiniciado depois de editar `.env.local`.
+- A migration `0002_fix_profiles_signup_flow.sql` foi aplicada no Supabase.
 
 Para criar o primeiro owner:
 
