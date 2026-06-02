@@ -1,35 +1,52 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
+type PublicTable<Row, Insert, Update = Partial<Insert>> = {
+  Row: Row;
+  Insert: Insert;
+  Update: Update;
+};
+
 export type Database = {
   public: {
     Tables: {
-      profiles: {
-        Row: {
+      profiles: PublicTable<
+        {
           id: string;
-          name: string | null;
+          full_name: string | null;
           email: string | null;
+          phone: string | null;
           city: string | null;
           state: string | null;
+          latitude: number | null;
+          longitude: number | null;
           education_level: string | null;
           subscription_status: string;
+          terms_accepted_at: string | null;
+          privacy_accepted_at: string | null;
+          onboarding_completed: boolean;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id: string;
-          name?: string | null;
+          full_name?: string | null;
           email?: string | null;
+          phone?: string | null;
           city?: string | null;
           state?: string | null;
+          latitude?: number | null;
+          longitude?: number | null;
           education_level?: string | null;
           subscription_status?: string;
+          terms_accepted_at?: string | null;
+          privacy_accepted_at?: string | null;
+          onboarding_completed?: boolean;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
-      };
-      user_preferences: {
-        Row: {
+        }
+      >;
+      user_preferences: PublicTable<
+        {
           id: string;
           user_id: string;
           states: string[];
@@ -41,12 +58,13 @@ export type Database = {
           min_salary: number | null;
           accepts_temporary: boolean;
           accepts_reserve_list: boolean;
+          accepts_remote_or_other_city_exam: boolean;
           notification_channels: string[];
           notification_frequency: string;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           user_id: string;
           states?: string[];
@@ -58,15 +76,27 @@ export type Database = {
           min_salary?: number | null;
           accepts_temporary?: boolean;
           accepts_reserve_list?: boolean;
+          accepts_remote_or_other_city_exam?: boolean;
           notification_channels?: string[];
           notification_frequency?: string;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["user_preferences"]["Insert"]>;
-      };
-      sources: {
-        Row: {
+        }
+      >;
+      admin_users: PublicTable<
+        {
+          user_id: string;
+          role: "owner" | "admin";
+          created_at: string;
+        },
+        {
+          user_id: string;
+          role?: "owner" | "admin";
+          created_at?: string;
+        }
+      >;
+      sources: PublicTable<
+        {
           id: string;
           name: string;
           type: string;
@@ -74,14 +104,14 @@ export type Database = {
           city: string | null;
           state: string | null;
           reliability_score: number;
-          crawl_frequency: string;
-          crawler_strategy: string;
+          crawl_frequency: string | null;
+          crawler_strategy: string | null;
           status: string;
-          last_crawled_at: string | null;
+          notes: string | null;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           name: string;
           type: string;
@@ -89,52 +119,66 @@ export type Database = {
           city?: string | null;
           state?: string | null;
           reliability_score?: number;
-          crawl_frequency?: string;
-          crawler_strategy?: string;
+          crawl_frequency?: string | null;
+          crawler_strategy?: string | null;
           status?: string;
-          last_crawled_at?: string | null;
+          notes?: string | null;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["sources"]["Insert"]>;
-      };
-      contests: {
-        Row: {
+        }
+      >;
+      contests: PublicTable<
+        {
           id: string;
           title: string;
           organization: string;
+          sphere: string;
           city: string | null;
-          state: string | null;
+          state: string;
+          latitude: number | null;
+          longitude: number | null;
           board: string | null;
           status: string;
           official_url: string;
           source_id: string | null;
+          summary: string | null;
+          document_url: string | null;
+          document_storage_path: string | null;
           confidence_score: number;
           publication_status: string;
+          is_demo: boolean;
           published_at: string | null;
+          created_by: string | null;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           title: string;
           organization: string;
+          sphere?: string;
           city?: string | null;
-          state?: string | null;
+          state: string;
+          latitude?: number | null;
+          longitude?: number | null;
           board?: string | null;
           status?: string;
           official_url: string;
           source_id?: string | null;
+          summary?: string | null;
+          document_url?: string | null;
+          document_storage_path?: string | null;
           confidence_score?: number;
           publication_status?: string;
+          is_demo?: boolean;
           published_at?: string | null;
+          created_by?: string | null;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["contests"]["Insert"]>;
-      };
-      contest_roles: {
-        Row: {
+        }
+      >;
+      contest_roles: PublicTable<
+        {
           id: string;
           contest_id: string;
           role_name: string;
@@ -144,10 +188,12 @@ export type Database = {
           salary_text: string | null;
           vacancies: number | null;
           reserve_list: boolean;
+          workload: string | null;
+          requirements: string | null;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           contest_id: string;
           role_name: string;
@@ -157,13 +203,14 @@ export type Database = {
           salary_text?: string | null;
           vacancies?: number | null;
           reserve_list?: boolean;
+          workload?: string | null;
+          requirements?: string | null;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["contest_roles"]["Insert"]>;
-      };
-      contest_dates: {
-        Row: {
+        }
+      >;
+      contest_dates: PublicTable<
+        {
           id: string;
           contest_id: string;
           event_type: string;
@@ -174,8 +221,8 @@ export type Database = {
           confidence_score: number;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           contest_id: string;
           event_type: string;
@@ -186,11 +233,10 @@ export type Database = {
           confidence_score?: number;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["contest_dates"]["Insert"]>;
-      };
-      saved_contests: {
-        Row: {
+        }
+      >;
+      saved_contests: PublicTable<
+        {
           id: string;
           user_id: string;
           contest_id: string;
@@ -198,8 +244,8 @@ export type Database = {
           notes: string | null;
           created_at: string;
           updated_at: string;
-        };
-        Insert: {
+        },
+        {
           id?: string;
           user_id: string;
           contest_id: string;
@@ -207,26 +253,47 @@ export type Database = {
           notes?: string | null;
           created_at?: string;
           updated_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["saved_contests"]["Insert"]>;
-      };
-      admin_users: {
-        Row: {
-          user_id: string;
-          role: string;
+        }
+      >;
+      audit_logs: PublicTable<
+        {
+          id: string;
+          actor_id: string | null;
+          action: string;
+          entity_type: string;
+          entity_id: string | null;
+          before: Json | null;
+          after: Json | null;
           created_at: string;
-        };
-        Insert: {
-          user_id: string;
-          role?: string;
+        },
+        {
+          id?: string;
+          actor_id?: string | null;
+          action: string;
+          entity_type: string;
+          entity_id?: string | null;
+          before?: Json | null;
+          after?: Json | null;
           created_at?: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["admin_users"]["Insert"]>;
-      };
+        }
+      >;
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      is_admin: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
+      is_owner: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };
 };
+
+export type Tables<T extends keyof Database["public"]["Tables"]> = Database["public"]["Tables"][T]["Row"];
+export type Inserts<T extends keyof Database["public"]["Tables"]> = Database["public"]["Tables"][T]["Insert"];
+export type Updates<T extends keyof Database["public"]["Tables"]> = Database["public"]["Tables"][T]["Update"];
