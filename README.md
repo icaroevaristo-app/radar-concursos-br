@@ -195,6 +195,28 @@ Não foram implementados crawler, IA, pagamento, WhatsApp, Telegram, app nativo,
 
 Dados exibidos no Radar são `seed/demo` e estão marcados visualmente.
 
+## Radar e concursos
+
+A tela `/radar` lê concursos publicados diretamente do Supabase:
+
+- `contests` com `publication_status = 'published'`
+- `contest_roles`
+- `contest_dates`
+- `sources`, quando vinculada
+- `saved_contests` do usuário logado
+
+O seed continua sendo demo, mas agora vem do banco. Os cards marcados com `Seed/demo` não indicam concursos reais em aberto.
+
+O match da Sprint 1 é simples e sem IA. Ele soma pontos por estado, cidade, escolaridade, cargo/área, salário mínimo e preferência sobre cadastro reserva. Não há geolocalização real por distância nesta etapa.
+
+Para testar salvar/remover concurso:
+
+1. Entre com um usuário autenticado e com onboarding completo.
+2. Acesse `/radar`.
+3. Clique em `Salvar concurso`.
+4. Acesse `/meus-concursos` e confirme que o item aparece.
+5. Clique em `Remover dos salvos` e confirme que ele desaparece após a atualização.
+
 ## Próxima tarefa recomendada
 
-Conectar Supabase Auth real nas telas de login/cadastro, trocar o Radar para ler `contests`, `contest_roles` e `contest_dates` publicados, e fazer `saved_contests` funcionar com o usuário autenticado.
+Evoluir o Radar para filtros persistentes/editáveis e preparar a leitura real do painel admin sem implementar crawler ou IA ainda.

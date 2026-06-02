@@ -1,19 +1,44 @@
+import { getCurrentUserPreferences, getSavedContestsForUser } from "@/lib/contests/queries";
+import { calculateContestMatch } from "@/lib/contests/match";
 import { PageShell } from "@/components/layout/page-shell";
-import { DemoContestCard } from "@/components/contests/demo-contest-card";
+import { ContestCard } from "@/components/contests/contest-card";
 import { PlaceholderPanel } from "@/components/shared/placeholder-panel";
-import { demoContests } from "@/lib/demo-data";
+import { Card } from "@/components/ui/card";
 
-export default function MeusConcursosPage() {
+export default async function MeusConcursosPage() {
+  const { user, profile, preferences } = await getCurrentUserPreferences();
+  const { savedContests, error } = await getSavedContestsForUser(user.id);
+
   return (
     <PageShell
       eyebrow="Área do usuário"
       title="Meus concursos"
-      description="Placeholder para saved_contests e checklist por usuário."
+      description="Concursos salvos por você, lidos de saved_contests no Supabase."
     >
       <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-4">
-          {demoContests.slice(0, 2).map((contest) => (
-            <DemoContestCard key={contest.id} contest={contest} compact />
+          {error ? (
+            <Card className="p-5">
+              <h2 className="font-display text-lg font-bold">Erro ao carregar salvos</h2>
+              <p className="mt-2 text-sm text-muted-foreground">Tente novamente em instantes.</p>
+            </Card>
+          ) : null}
+
+          {!error && !savedContests.length ? (
+            <Card className="p-5">
+              <h2 className="font-display text-lg font-bold">Nenhum concurso salvo</h2>
+              <p className="mt-2 text-sm text-muted-foreground">Use o botão Salvar concurso na tela Radar ou nos detalhes.</p>
+            </Card>
+          ) : null}
+
+          {savedContests.map((saved) => (
+            <ContestCard
+              key={saved.id}
+              compact
+              contest={saved.contest}
+              isSaved
+              match={calculateContestMatch(saved.contest, preferences, profile)}
+            />
           ))}
         </div>
         <PlaceholderPanel
