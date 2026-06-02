@@ -217,6 +217,24 @@ Para testar salvar/remover concurso:
 4. Acesse `/meus-concursos` e confirme que o item aparece.
 5. Clique em `Remover dos salvos` e confirme que ele desaparece após a atualização.
 
+## Admin Sprint 1
+
+O painel `/admin` é acessível apenas para usuários presentes em `public.admin_users`. Usuários comuns são redirecionados.
+
+Fluxo manual disponível:
+
+- `/admin`: dashboard com totais reais de fontes e concursos.
+- `/admin/fontes`: lista fontes reais, pausa/reativa e abre edição.
+- `/admin/fontes/nova`: cria fonte manual.
+- `/admin/fontes/[id]/editar`: edita fonte.
+- `/admin/concursos`: lista concursos reais, publica/despublica e abre edição.
+- `/admin/concursos/novo`: cria concurso em draft ou outro status permitido.
+- `/admin/concursos/[id]/editar`: edita concurso, cargos e datas.
+
+Publicar concurso exige `official_url`. Ao publicar, `publication_status` vira `published` e `published_at` é preenchido. Despublicar altera para `unpublished` sem deletar o registro.
+
+As ações administrativas registram `audit_logs` básicos. Crawler, IA, upload real de PDF, OCR e notificações continuam fora do escopo.
+
 ## Próxima tarefa recomendada
 
 Evoluir o Radar para filtros persistentes/editáveis e preparar a leitura real do painel admin sem implementar crawler ou IA ainda.
