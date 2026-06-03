@@ -179,9 +179,13 @@ on conflict (user_id) do update set role = 'owner';
 
 ```bash
 npm run dev
+npm run dev:turbo
 npm run lint
 npm run typecheck
+npm run test
 ```
+
+`npm run dev` usa `next dev --webpack` por estabilidade no ambiente local. `npm run dev:turbo` mantém o Turbopack disponível para teste futuro.
 
 ## Aviso legal
 
