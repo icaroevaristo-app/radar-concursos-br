@@ -7,7 +7,7 @@ type PlaceholderPanelProps = {
 
 export function PlaceholderPanel({ title, items }: PlaceholderPanelProps) {
   return (
-    <Card className="p-5">
+    <Card className="h-fit p-5">
       <h2 className="font-display text-lg font-bold">{title}</h2>
       <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
         {items.map((item) => (

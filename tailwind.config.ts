@@ -19,6 +19,7 @@ const config: Config = {
         "primary-foreground": "hsl(var(--primary-foreground))",
         success: "hsl(var(--success))",
         danger: "hsl(var(--danger))",
+        warning: "hsl(var(--warning))",
       },
       fontFamily: {
         display: ["Syne", "Inter", "system-ui", "sans-serif"],
@@ -26,6 +27,7 @@ const config: Config = {
       },
       boxShadow: {
         soft: "0 18px 60px rgb(0 0 0 / 0.28)",
+        glow: "0 0 0 1px rgb(245 158 11 / 0.14), 0 22px 70px rgb(0 0 0 / 0.36)",
       },
     },
   },

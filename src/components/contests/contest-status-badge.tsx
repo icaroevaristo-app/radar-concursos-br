@@ -12,7 +12,7 @@ const labels: Record<string, string> = {
 };
 
 export function ContestStatusBadge({ status }: { status: string }) {
-  const variant = status === "open" ? "success" : status === "upcoming" ? "amber" : "muted";
+  const variant = status === "open" ? "success" : status === "upcoming" ? "amber" : status === "canceled" ? "danger" : "muted";
 
   return <Badge variant={variant}>{labels[status] ?? status}</Badge>;
 }

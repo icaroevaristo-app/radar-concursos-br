@@ -11,8 +11,8 @@ export function SaveContestButton({ contestId, isSaved, className }: SaveContest
   return (
     <form action={toggleSaveContestAction}>
       <input name="contest_id" type="hidden" value={contestId} />
-      <Button className={className} type="submit" variant={isSaved ? "outline" : "primary"}>
-        {isSaved ? "Remover dos salvos" : "Salvar concurso"}
+      <Button className={className} size="sm" type="submit" variant={isSaved ? "outline" : "primary"}>
+        {isSaved ? "Remover" : "Salvar"}
       </Button>
     </form>
   );

@@ -6,7 +6,12 @@ export const NON_OFFICIAL_NOTICE =
 
 export function NonOfficialNotice({ className }: { className?: string }) {
   return (
-    <aside className={cn("rounded-lg border border-primary/25 bg-primary/10 p-4 text-sm text-amber-100", className)}>
+    <aside
+      className={cn(
+        "rounded-lg border border-primary/25 bg-gradient-to-br from-primary/12 to-primary/5 p-4 text-sm text-amber-50 shadow-soft",
+        className,
+      )}
+    >
       <div className="flex gap-3">
         <ShieldAlert className="mt-0.5 h-5 w-5 flex-none text-primary" />
         <p className="leading-6">{NON_OFFICIAL_NOTICE}</p>

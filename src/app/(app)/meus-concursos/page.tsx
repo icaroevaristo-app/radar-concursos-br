@@ -1,8 +1,10 @@
+import { BookmarkCheck } from "lucide-react";
 import { getCurrentUserPreferences, getSavedContestsForUser } from "@/lib/contests/queries";
 import { calculateContestMatch } from "@/lib/contests/match";
 import { PageShell } from "@/components/layout/page-shell";
 import { ContestCard } from "@/components/contests/contest-card";
 import { PlaceholderPanel } from "@/components/shared/placeholder-panel";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default async function MeusConcursosPage() {
@@ -13,7 +15,7 @@ export default async function MeusConcursosPage() {
     <PageShell
       eyebrow="Área do usuário"
       title="Meus concursos"
-      description="Concursos salvos por você, lidos de saved_contests no Supabase."
+      description="Concursos salvos por você, lidos de saved_contests no Supabase. Nenhum usuário vê salvos de outra conta."
     >
       <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-4">
@@ -25,10 +27,14 @@ export default async function MeusConcursosPage() {
           ) : null}
 
           {!error && !savedContests.length ? (
-            <Card className="p-5">
-              <h2 className="font-display text-lg font-bold">Nenhum concurso salvo</h2>
-              <p className="mt-2 text-sm text-muted-foreground">Use o botão Salvar concurso na tela Radar ou nos detalhes.</p>
-            </Card>
+            <div className="empty-state">
+              <BookmarkCheck className="h-6 w-6 text-primary" />
+              <h2 className="mt-3 font-display text-lg font-bold text-foreground">Nenhum concurso salvo</h2>
+              <p className="mt-2">Use o botão Salvar nos cards do Radar ou na tela de detalhes para montar sua lista.</p>
+              <Button asChild className="mt-4" href="/radar">
+                Ir para o Radar
+              </Button>
+            </div>
           ) : null}
 
           {savedContests.map((saved) => (

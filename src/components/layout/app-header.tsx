@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCurrentProfile, getCurrentUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const navItems = [
   { href: "/radar", label: "Radar" },
@@ -14,32 +15,43 @@ export async function AppHeader() {
   const displayName = profile?.full_name ?? user?.email ?? null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link className="font-display text-lg font-black tracking-tight text-primary" href="/">
-          RADAR
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/86 backdrop-blur-xl">
+      <div className="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <Link className="group flex items-center gap-2" href="/">
+          <span className="flex h-8 w-8 items-center justify-center rounded-md border border-primary/35 bg-primary/10 font-display text-sm font-black text-primary transition group-hover:border-primary/60">
+            R
+          </span>
+          <span className="font-display text-lg font-black tracking-tight text-foreground">
+            Radar <span className="text-primary">Concursos</span>
+          </span>
         </Link>
-        <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+        <nav className="order-3 flex w-full items-center gap-2 overflow-x-auto text-sm text-muted-foreground md:order-2 md:w-auto md:gap-3">
           {navItems.map((item) => (
-            <Link key={item.href} className="hover:text-foreground" href={item.href}>
+            <Link
+              key={item.href}
+              className="rounded-full border border-transparent px-3 py-1.5 transition hover:border-border hover:bg-muted/60 hover:text-foreground"
+              href={item.href}
+            >
               {item.label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="order-2 flex items-center gap-2 md:order-3">
           {user ? (
             <>
-              <span className="hidden max-w-48 truncate text-xs text-muted-foreground sm:block">{displayName}</span>
-              <Button asChild href="/logout" variant="ghost">
+              <Badge className="hidden max-w-52 truncate sm:inline-flex" variant="muted">
+                {displayName}
+              </Badge>
+              <Button asChild href="/logout" size="sm" variant="ghost">
                 Sair
               </Button>
             </>
           ) : (
             <>
-              <Button asChild href="/login" variant="ghost">
+              <Button asChild href="/login" size="sm" variant="ghost">
                 Entrar
               </Button>
-              <Button asChild href="/cadastro">
+              <Button asChild href="/cadastro" size="sm">
                 Cadastro
               </Button>
             </>

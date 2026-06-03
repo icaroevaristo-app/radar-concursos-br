@@ -2,29 +2,30 @@
 
 Data: 2026-06-02
 
-Este documento é um handoff técnico para outra IA ou outro desenvolvedor continuar o projeto sem depender do histórico da conversa anterior.
+Este documento é um handoff técnico para outra IA ou outro desenvolvedor continuar o projeto sem depender do histórico da conversa.
 
 ## 1. Resumo Executivo
 
-O Radar Concursos BR é um web app independente para organizar e acompanhar concursos públicos municipais/estaduais a partir de fontes públicas. O produto não é órgão oficial, não representa governos, bancas ou prefeituras, e sempre deve orientar o usuário a conferir o edital/link oficial.
+O Radar Concursos BR é um web app independente para organizar e acompanhar concursos públicos municipais/estaduais a partir de fontes públicas. O produto não é órgão oficial, não representa governos, bancas ou prefeituras, e sempre orienta o usuário a conferir o edital/link oficial.
 
-A Sprint 1 entregou a fundação do produto:
+A Sprint 1 entregou a fundação funcional do produto:
 
-- Next.js com TypeScript e Tailwind CSS.
+- Next.js App Router com TypeScript e Tailwind CSS.
 - Supabase Auth.
 - PostgreSQL via Supabase com migrations, RLS e seed demo.
 - Cadastro, login, logout e onboarding.
-- Perfis e preferências de usuário.
-- Radar com concursos publicados vindos do banco.
+- Profiles e user_preferences.
+- Radar lendo concursos publicados do Supabase.
 - Detalhes por id real.
-- Meus Concursos com `saved_contests`.
-- Admin protegido por `admin_users`.
+- Meus Concursos usando saved_contests.
+- Admin protegido por admin_users.
 - CRUD manual de fontes, concursos, cargos e datas.
 - Publicar/despublicar concursos.
 - Audit logs básicos.
 - Testes unitários básicos com Vitest.
+- Polimento visual premium inspirado no protótipo, sem usar o HTML empacotado como base.
 
-Ainda não há crawler, IA, pagamento, notificações reais, upload real de PDF, OCR, WhatsApp, Telegram ou app nativo.
+Ainda não há crawler, IA, pagamento, notificações reais, upload real de PDF, OCR, WhatsApp, Telegram, scraping nacional, banco de questões, simulados, comunidade ou app nativo.
 
 ## 2. Stack e Comandos
 
@@ -51,7 +52,7 @@ npm run test
 npm audit --audit-level=moderate
 ```
 
-Observação importante:
+Observação:
 
 - `npm run dev` usa `next dev --webpack` por estabilidade local.
 - `npm run dev:turbo` usa `next dev` e fica disponível para testes futuros com Turbopack.
@@ -76,7 +77,7 @@ Regras:
 
 ## 4. Supabase Auth
 
-Rotas principais:
+Rotas:
 
 - `/cadastro`
 - `/login`
@@ -84,7 +85,7 @@ Rotas principais:
 - `/auth/callback`
 - `/onboarding`
 
-Configuração recomendada no Supabase Auth para dev local:
+Configuração recomendada em desenvolvimento:
 
 - Provider Email ativo.
 - `Confirm email` como `OFF` para testar cadastro/login/onboarding no mesmo fluxo.
@@ -93,10 +94,10 @@ Configuração recomendada no Supabase Auth para dev local:
 Fluxo atual:
 
 1. `/cadastro` chama `signupAction`.
-2. `signupAction` cria usuário via Supabase Auth usando client normal com anon key.
+2. `signupAction` cria usuário via Supabase Auth usando anon key.
 3. Após `signUp`, `profiles` é persistido via `createServiceRoleSupabaseClient()` server-side.
 4. São salvos `full_name`, `email`, `terms_accepted_at`, `privacy_accepted_at` e `subscription_status = 'free'`.
-5. `/login` autentica via Supabase Auth e redireciona para `/onboarding` ou `/radar`.
+5. `/login` autentica e redireciona para `/onboarding` ou `/radar`.
 6. `/onboarding` salva `profiles.city`, `profiles.state`, `profiles.education_level`, marca `onboarding_completed = true` e faz upsert em `user_preferences`.
 7. `/logout` encerra a sessão.
 
@@ -140,12 +141,6 @@ Funções SQL relevantes:
 - `public.is_admin()`
 - `public.is_owner()`
 
-Triggers relevantes:
-
-- `on_auth_user_created` em `auth.users`.
-- Triggers de `updated_at`.
-- Trigger para preencher `published_at` quando concurso é publicado.
-
 RLS:
 
 - RLS está ativo nas tabelas sensíveis.
@@ -169,6 +164,8 @@ Ou aplicar manualmente pelo SQL Editor na ordem:
 1. `0001_sprint_1_foundation.sql`
 2. `0002_fix_profiles_signup_flow.sql`
 3. `seed.sql`
+
+O seed é demo, usa URLs `https://example.com/...`, marca concursos com `is_demo = true` e não afirma que oportunidades estão realmente abertas.
 
 ## 6. Rotas Implementadas
 
@@ -205,9 +202,50 @@ Proteções:
 - `src/app/admin/layout.tsx` chama `requireAdmin()`.
 - Todas as actions admin chamam `requireAdmin()` server-side.
 
-## 7. Radar, Detalhes e Meus Concursos
+## 7. UI/UX Após Polimento Visual
 
-Arquivos relevantes:
+O protótipo `prototype/radar-concursos-br.html` foi usado apenas como referência visual. O HTML empacotado, scripts minificados e estrutura hardcoded não foram copiados.
+
+Direção visual aplicada:
+
+- Tema escuro premium com fundo quase preto/azul profundo.
+- Acentos âmbar/dourado.
+- Cards com bordas sutis, sombras e gradientes discretos.
+- Badges de status mais legíveis.
+- Inputs, selects, textareas e checkboxes com foco visível.
+- Landing com hero mais forte e CTA claro.
+- Auth e onboarding em cards premium.
+- Radar com métricas, abas e cards mais atraentes.
+- Detalhes com link oficial e aviso de não-oficialidade destacados.
+- Meus Concursos com empty state mais útil.
+- Admin com métricas, listas, formulários e ações mais organizados.
+
+Arquivos de UI impactados:
+
+- `src/app/globals.css`
+- `tailwind.config.ts`
+- `src/components/ui/button.tsx`
+- `src/components/ui/card.tsx`
+- `src/components/ui/badge.tsx`
+- `src/components/layout/app-header.tsx`
+- `src/components/layout/page-shell.tsx`
+- `src/components/shared/non-official-notice.tsx`
+- `src/components/shared/placeholder-panel.tsx`
+- `src/components/contests/*`
+- páginas públicas, autenticadas e admin.
+
+A lógica real foi preservada:
+
+- Radar continua lendo Supabase.
+- Detalhes continua usando id real.
+- Meus Concursos continua usando `saved_contests`.
+- Admin continua usando Server Actions e `requireAdmin()`.
+- Nenhum array hardcoded voltou a ser fonte principal de concursos.
+- Nenhuma service role foi exposta no client.
+
+## 8. Radar, Detalhes e Meus Concursos
+
+Arquivos:
 
 - `src/lib/contests/queries.ts`
 - `src/lib/contests/actions.ts`
@@ -223,7 +261,8 @@ Radar:
 - Hidrata `contest_roles`, `contest_dates` e `sources`.
 - Busca `saved_contests` do usuário logado.
 - Calcula match simples por usuário.
-- Abas atuais: Todos, Match forte, Novos, Encerrando.
+- Abas: Todos, Match forte, Novos, Encerrando.
+- Mostra aviso se itens demo vindos do banco estiverem presentes.
 
 Detalhes:
 
@@ -244,7 +283,7 @@ Salvar/remover:
 - `saveContest`, `unsaveContest` e `toggleSaveContest` persistem em `saved_contests`.
 - Revalidam `/radar`, `/meus-concursos` e `/concursos/[id]`.
 
-## 8. Match Simples da Sprint 1
+## 9. Match Simples da Sprint 1
 
 Arquivo:
 
@@ -267,9 +306,9 @@ Níveis:
 
 Não há IA nem cálculo real de distância.
 
-## 9. Admin
+## 10. Admin
 
-Arquivos relevantes:
+Arquivos:
 
 - `src/lib/admin/queries.ts`
 - `src/lib/admin/actions.ts`
@@ -290,8 +329,8 @@ Dashboard:
 - Total de concursos.
 - Concursos publicados.
 - Concursos em draft/needs_review.
-- Últimos 5 concursos.
-- Últimas 5 fontes.
+- Últimos concursos.
+- Últimas fontes.
 
 Fontes:
 
@@ -318,7 +357,7 @@ Audit logs:
 - `logAdminAction()` grava em `audit_logs`.
 - Ações cobertas: fontes, concursos, publicação, cargos e datas.
 
-## 10. Primeiro Admin
+## 11. Primeiro Admin
 
 Após criar usuário via `/cadastro`:
 
@@ -332,7 +371,7 @@ on conflict (user_id) do update set role = 'owner';
 
 Sem linha em `admin_users`, `/admin` deve bloquear/redirecionar o usuário.
 
-## 11. Testes Automatizados
+## 12. Testes Automatizados
 
 Framework:
 
@@ -364,7 +403,7 @@ Cobertura atual:
 
 Não há testes de integração com Supabase real ainda.
 
-## 12. Fluxo Manual de QA
+## 13. Fluxo Manual de QA
 
 1. Rodar `npm run dev`.
 2. Criar conta em `/cadastro`.
@@ -392,8 +431,9 @@ Não há testes de integração com Supabase real ainda.
 24. Despublicar concurso.
 25. Confirmar que some do Radar.
 26. Conferir `audit_logs`.
+27. Verificar responsividade básica em landing, auth, onboarding, Radar, detalhes, Meus Concursos e Admin.
 
-## 13. Revisão de Segurança
+## 14. Revisão de Segurança
 
 Estado atual:
 
@@ -412,7 +452,7 @@ Pontos a revalidar em staging:
 - Visibilidade de concursos não publicados para usuário comum.
 - Bloqueio real de `/admin` para usuário não admin.
 
-## 14. Logs
+## 15. Logs
 
 Logs temporários de debug foram removidos.
 
@@ -428,7 +468,7 @@ Não imprimir:
 - Tokens.
 - Cookies.
 
-## 15. Fora do Escopo Atual
+## 16. Fora do Escopo Atual
 
 Não implementar na Sprint 1:
 
@@ -445,15 +485,15 @@ Não implementar na Sprint 1:
 - Banco de questões.
 - Simulados.
 - Comunidade.
-- Redesign visual completo.
+- Novas tabelas.
 
-## 16. Pendências Para Próxima Etapa
+## 17. Pendências Para Próxima Etapa
 
 Prioridade recomendada antes da Sprint 2:
 
 1. Rodar QA manual completo em Supabase real/staging.
 2. Revisar RLS na prática com dois usuários: comum e admin.
-3. Polir visual dos formulários admin e páginas autenticadas.
+3. Validar responsividade visual com browser em desktop e mobile.
 4. Melhorar UX de erros em Server Actions.
 5. Criar página `/conta` para edição de perfil/preferências.
 6. Criar testes de integração com Supabase local ou staging.
@@ -465,9 +505,9 @@ Sprint 2 sugerida:
 - Criar entidades de documentos brutos, se necessário.
 - Manter cobertura restrita e sem scraping nacional.
 
-## 17. Última Validação Conhecida
+## 18. Última Validação Conhecida
 
-Na última revisão técnica, os comandos abaixo passaram:
+Após o polimento visual, os comandos abaixo foram executados:
 
 ```bash
 npm run lint
@@ -476,9 +516,9 @@ npm run test
 npm audit --audit-level=moderate
 ```
 
-Resultado conhecido:
+Resultado:
 
-- Lint passou.
-- Typecheck passou.
-- Vitest passou com 4 arquivos e 13 testes.
-- Audit retornou `found 0 vulnerabilities`.
+- `npm run lint`: passou.
+- `npm run typecheck`: passou.
+- `npm run test`: passou com 4 arquivos e 13 testes.
+- `npm audit --audit-level=moderate`: passou, `found 0 vulnerabilities`.

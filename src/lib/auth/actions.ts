@@ -42,12 +42,8 @@ function logSignupProfileError(stage: string, userId: string | undefined, error:
 }
 
 function createProfileServiceClient(userId: string | undefined) {
-  console.info("[signupAction] service role available", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY));
-
   try {
-    const serviceClient = createServiceRoleSupabaseClient();
-    console.info("[signupAction] profile persistence client", "service_role");
-    return serviceClient;
+    return createServiceRoleSupabaseClient();
   } catch (error) {
     logSignupProfileError("service_role_client.create", userId, error);
     console.error("Missing SUPABASE_SERVICE_ROLE_KEY for server-side profile persistence");
