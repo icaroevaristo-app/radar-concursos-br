@@ -16,9 +16,14 @@ export default async function AdminConcursosPage() {
     >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{contests.length} concursos cadastrados no Supabase.</p>
-        <Button asChild href="/admin/concursos/novo">
-          Novo concurso
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild href="/admin/concursos/importar" variant="outline">
+            Importar JSON
+          </Button>
+          <Button asChild href="/admin/concursos/novo">
+            Novo concurso
+          </Button>
+        </div>
       </div>
 
       {error ? (
