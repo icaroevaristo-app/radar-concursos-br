@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { UserPlus } from "lucide-react";
 import { signupAction } from "@/lib/auth/actions";
+import { TrackEventOnMount } from "@/components/analytics/track-event";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ export default async function CadastroPage({ searchParams }: CadastroPageProps) 
       title="Crie sua conta"
       description="Use dados mínimos para começar. Não coletamos CPF, RG, endereço completo ou documentos pessoais."
     >
+      <TrackEventOnMount event="signup_started" metadata={{ source: "cadastro_page" }} />
       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-[1.05fr_0.95fr]">
         <Card className="p-6 shadow-glow">
           <div className="mb-5 flex items-center gap-3">

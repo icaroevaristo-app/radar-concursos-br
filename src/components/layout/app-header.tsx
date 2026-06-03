@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const navItems = [
+  { href: "/concursos", label: "Concursos" },
   { href: "/radar", label: "Radar" },
   { href: "/meus-concursos", label: "Meus concursos" },
   { href: "/admin", label: "Admin" },
@@ -52,7 +53,7 @@ export async function AppHeader() {
                 Entrar
               </Button>
               <Button asChild href="/cadastro" size="sm">
-                Cadastro
+                Criar alerta
               </Button>
             </>
           )}

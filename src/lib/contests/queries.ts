@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { getCurrentProfile, requireUser } from "@/lib/auth";
+import { getCurrentProfile, getCurrentUser, requireUser } from "@/lib/auth";
 import {
   getDateValue,
   getRegistrationEndDate,
@@ -118,6 +118,30 @@ export async function getContestById(id: string) {
 
 export async function getCurrentUserPreferences() {
   const user = await requireUser();
+  const supabase = await createServerSupabaseClient();
+  const [{ data: preferences }, profile] = await Promise.all([
+    supabase.from("user_preferences").select("*").eq("user_id", user.id).maybeSingle(),
+    getCurrentProfile(),
+  ]);
+
+  return {
+    user,
+    profile,
+    preferences: preferences as UserPreferenceRow | null,
+  };
+}
+
+export async function getOptionalCurrentUserPreferences() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return {
+      user: null,
+      profile: null,
+      preferences: null as UserPreferenceRow | null,
+    };
+  }
+
   const supabase = await createServerSupabaseClient();
   const [{ data: preferences }, profile] = await Promise.all([
     supabase.from("user_preferences").select("*").eq("user_id", user.id).maybeSingle(),

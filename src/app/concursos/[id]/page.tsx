@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink, FileText, MapPin } from "lucide-react";
-import { getCurrentUserPreferences, getContestById, getUserSavedContestIds } from "@/lib/contests/queries";
+import {
+  getContestById,
+  getOptionalCurrentUserPreferences,
+  getUserSavedContestIds,
+} from "@/lib/contests/queries";
 import { calculateContestMatch } from "@/lib/contests/match";
 import { formatRegistrationEnd, valueOrNotInformed } from "@/lib/contests/formatters";
+import { createRequestId, logger } from "@/lib/logger";
 import { PageShell } from "@/components/layout/page-shell";
 import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 import { Badge } from "@/components/ui/badge";
@@ -22,15 +27,29 @@ type ContestDetailsPageProps = {
 
 export default async function ContestDetailsPage({ params }: ContestDetailsPageProps) {
   const { id } = await params;
+  const requestId = createRequestId();
   const contest = await getContestById(id);
 
   if (!contest) {
     notFound();
   }
 
-  const { user, profile, preferences } = await getCurrentUserPreferences();
-  const savedContestIds = await getUserSavedContestIds(user.id);
+  const { user, profile, preferences } = await getOptionalCurrentUserPreferences();
+  const savedContestIds = user ? await getUserSavedContestIds(user.id) : new Set<string>();
   const match = calculateContestMatch(contest, preferences, profile);
+
+  logger({
+    level: "info",
+    message: "contest_viewed",
+    requestId,
+    userId: user?.id,
+    route: "/concursos/[id]",
+    metadata: {
+      contestId: contest.id,
+      status: contest.status,
+      isDemo: contest.is_demo,
+    },
+  });
 
   return (
     <PageShell
@@ -45,9 +64,11 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
               <div className="flex flex-wrap gap-2">
                 {contest.is_demo ? <Badge variant="amber">Seed/demo</Badge> : null}
                 <ContestStatusBadge status={contest.status} />
-                <Badge variant={match.matchLevel === "strong" ? "success" : match.matchLevel === "medium" ? "amber" : "muted"}>
-                  {match.score}% match
-                </Badge>
+                {user ? (
+                  <Badge variant={match.matchLevel === "strong" ? "success" : match.matchLevel === "medium" ? "amber" : "muted"}>
+                    {match.score}% match
+                  </Badge>
+                ) : null}
               </div>
               <p className="mt-4 text-sm text-muted-foreground">{contest.organization}</p>
             </div>
@@ -61,7 +82,10 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
                 ["Situação", contest.status],
                 ["Inscrição", formatRegistrationEnd(contest.dates)],
                 ["Resumo", valueOrNotInformed(contest.summary)],
-                ["Motivos do match", match.reasons.join(" ") || "não informado"],
+                [
+                  "Motivos do match",
+                  user ? match.reasons.join(" ") || "não informado" : "Crie um alerta gratuito para ver compatibilidade com seu perfil.",
+                ],
               ].map(([label, value]) => (
                 <div key={label} className="premium-panel-subtle p-3">
                   <dt className="text-xs uppercase tracking-[0.18em] text-muted-foreground/75">{label}</dt>
@@ -94,13 +118,21 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
           <Card className="h-fit p-5 shadow-glow">
             <h2 className="font-display text-lg font-bold">Ações</h2>
             <div className="mt-4 space-y-3">
-              <SaveContestButton className="w-full" contestId={contest.id} isSaved={savedContestIds.has(contest.id)} />
+              {user ? (
+                <>
+                  <SaveContestButton className="w-full" contestId={contest.id} isSaved={savedContestIds.has(contest.id)} />
+                  <Link className="block text-center text-sm font-bold text-primary hover:text-amber-300" href="/meus-concursos">
+                    Ver meus concursos
+                  </Link>
+                </>
+              ) : (
+                <Button asChild className="w-full" href="/cadastro">
+                  Criar alerta gratuito
+                </Button>
+              )}
               <Button asChild className="w-full" href={contest.official_url} target="_blank" variant="outline">
                 Link oficial <ExternalLink className="h-4 w-4" />
               </Button>
-              <Link className="block text-center text-sm font-bold text-primary hover:text-amber-300" href="/meus-concursos">
-                Ver meus concursos
-              </Link>
             </div>
           </Card>
           <Card className="h-fit p-5">

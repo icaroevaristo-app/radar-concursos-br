@@ -220,5 +220,19 @@ export async function onboardingAction(formData: FormData) {
     errorRedirect("/onboarding", "Não foi possível salvar suas preferências.");
   }
 
+  logger({
+    level: "info",
+    message: "onboarding_completed",
+    userId: user.id,
+    action: "onboardingAction",
+    metadata: {
+      state: input.state,
+      city: input.city,
+      educationLevel: input.educationLevel,
+      areasCount: input.areas.length,
+      desiredRolesCount: input.desiredRoles.length,
+    },
+  });
+
   redirect("/radar");
 }
