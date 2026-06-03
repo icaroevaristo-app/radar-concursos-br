@@ -56,11 +56,23 @@ export default async function CadastroPage({ searchParams }: CadastroPageProps) 
             </label>
             <label className="flex gap-3 rounded-md border border-border bg-background/45 p-3 text-sm text-muted-foreground">
               <input className="form-checkbox" name="terms_accepted" required type="checkbox" />
-              <span>Declaro que li e aceito os termos de uso.</span>
+              <span>
+                Declaro que li e aceito os{" "}
+                <Link className="font-bold text-primary hover:text-amber-300" href="/termos" target="_blank">
+                  Termos de Uso
+                </Link>
+                .
+              </span>
             </label>
             <label className="flex gap-3 rounded-md border border-border bg-background/45 p-3 text-sm text-muted-foreground">
               <input className="form-checkbox" name="privacy_accepted" required type="checkbox" />
-              <span>Declaro que li e aceito a política de privacidade.</span>
+              <span>
+                Declaro que li e aceito a{" "}
+                <Link className="font-bold text-primary hover:text-amber-300" href="/privacidade" target="_blank">
+                  Política de Privacidade
+                </Link>
+                .
+              </span>
             </label>
             <Button className="w-full" type="submit">
               Criar conta

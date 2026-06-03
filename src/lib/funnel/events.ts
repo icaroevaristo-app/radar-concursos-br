@@ -5,6 +5,8 @@ export const funnelEvents = [
   "signup_started",
   "onboarding_completed",
   "contest_viewed",
+  "preferences_viewed",
+  "preferences_updated",
 ] as const;
 
 export type FunnelEventName = (typeof funnelEvents)[number];

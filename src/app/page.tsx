@@ -2,6 +2,7 @@ import { ArrowRight, Bell, CheckCircle2, Clock, Filter, MapPin, ShieldCheck, Spa
 import { getPublishedContests } from "@/lib/contests/queries";
 import { TrackEventOnMount, TrackedLink } from "@/components/analytics/track-event";
 import { AppHeader } from "@/components/layout/app-header";
+import { AppFooter } from "@/components/layout/app-footer";
 import { PublicContestCard } from "@/components/contests/public-contest-card";
 import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 import { Badge } from "@/components/ui/badge";
@@ -239,6 +240,7 @@ export default async function Home() {
 
         <NonOfficialNotice className="mt-12" />
       </section>
+      <AppFooter />
     </main>
   );
 }

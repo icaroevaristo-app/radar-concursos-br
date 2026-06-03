@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { createRequestId, createSafeErrorMessage, logger } from "@/lib/logger";
 import { createServerSupabaseClient, createServiceRoleSupabaseClient } from "@/lib/supabase/server";
 import {
@@ -235,4 +236,78 @@ export async function onboardingAction(formData: FormData) {
   });
 
   redirect("/radar");
+}
+
+export async function updatePreferencesAction(formData: FormData) {
+  const input = parseOnboardingForm(formData);
+  const validationError = validateOnboardingInput(input);
+
+  if (validationError) {
+    errorRedirect("/preferencias", validationError);
+  }
+
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .update({
+      city: input.city,
+      state: input.state,
+      education_level: input.educationLevel,
+    })
+    .eq("id", user.id);
+
+  if (profileError) {
+    errorRedirect("/preferencias", "Não foi possível atualizar seu perfil.");
+  }
+
+  const { error: preferencesError } = await supabase.from("user_preferences").upsert(
+    {
+      user_id: user.id,
+      states: [input.state],
+      cities: [input.city],
+      radius_km: input.radiusKm,
+      education_levels: input.educationLevels,
+      desired_roles: input.desiredRoles,
+      areas: input.areas,
+      min_salary: input.minSalary,
+      accepts_temporary: input.acceptsTemporary,
+      accepts_reserve_list: input.acceptsReserveList,
+      accepts_remote_or_other_city_exam: input.acceptsRemoteOrOtherCityExam,
+      notification_channels: input.notificationChannels,
+      notification_frequency: input.notificationFrequency,
+    },
+    {
+      onConflict: "user_id",
+    },
+  );
+
+  if (preferencesError) {
+    errorRedirect("/preferencias", "Não foi possível salvar suas preferências.");
+  }
+
+  logger({
+    level: "info",
+    message: "preferences_updated",
+    userId: user.id,
+    action: "updatePreferencesAction",
+    metadata: {
+      state: input.state,
+      city: input.city,
+      educationLevel: input.educationLevel,
+      areasCount: input.areas.length,
+      desiredRolesCount: input.desiredRoles.length,
+    },
+  });
+
+  revalidatePath("/preferencias");
+  revalidatePath("/radar");
+  redirect("/preferencias?success=Preferências atualizadas com sucesso.");
 }

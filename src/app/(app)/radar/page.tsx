@@ -6,6 +6,7 @@ import { getDateValue, getRegistrationEndDate, isCreatedWithinDays, isWithinNext
 import { PageShell } from "@/components/layout/page-shell";
 import { ContestCard } from "@/components/contests/contest-card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 type RadarPageProps = {
@@ -72,6 +73,13 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
           <p className="text-xs text-muted-foreground">Inscrições encerrando</p>
           <p className="mt-1 font-display text-3xl font-black text-primary">{endingSoon}</p>
         </Card>
+      </div>
+
+      <div className="mb-6 flex flex-col gap-3 rounded-lg border border-primary/25 bg-primary/10 p-4 text-sm text-amber-50 sm:flex-row sm:items-center sm:justify-between">
+        <p>Quer ajustar cidade, escolaridade, áreas ou cargos do seu Radar?</p>
+        <Button asChild href="/preferencias" size="sm" variant="outline">
+          Editar preferências
+        </Button>
       </div>
 
       {hasDemo ? (
