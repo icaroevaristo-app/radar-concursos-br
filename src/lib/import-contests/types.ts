@@ -82,6 +82,7 @@ export type NormalizedImportPayload = {
 
 export type ImportValidationResult = {
   isValid: boolean;
+  requestId?: string;
   errors: string[];
   previewItems: ImportPreviewItem[];
   totals: {
@@ -98,6 +99,7 @@ export type ImportValidationResult = {
 export type ImportResult = {
   success: boolean;
   message: string;
+  requestId?: string;
   errors?: string[];
   summary?: {
     contestsCreated: number;

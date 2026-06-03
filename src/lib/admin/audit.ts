@@ -12,7 +12,7 @@ type LogAdminActionInput = {
 };
 
 export async function logAdminAction(supabase: SupabaseClient<Database>, input: LogAdminActionInput) {
-  await supabase.from("audit_logs").insert({
+  return supabase.from("audit_logs").insert({
     actor_id: input.actorId,
     action: input.action,
     entity_type: input.entityType,

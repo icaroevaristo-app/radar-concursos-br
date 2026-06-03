@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { createRequestId, createSafeErrorMessage, logger } from "@/lib/logger";
 import { createServerSupabaseClient, createServiceRoleSupabaseClient } from "@/lib/supabase/server";
 import {
   parseLoginForm,
@@ -23,35 +24,48 @@ function getErrorExtra(error: unknown, key: string) {
   return undefined;
 }
 
-function logSignupAuthError(error: unknown) {
-  console.error("[signupAction] supabase.auth.signUp failed", {
-    name: getErrorExtra(error, "name"),
-    message: getErrorExtra(error, "message"),
-    status: getErrorExtra(error, "status"),
-    code: getErrorExtra(error, "code"),
-    cause: getErrorExtra(error, "cause"),
-  });
-}
-
-function logSignupProfileError(stage: string, userId: string | undefined, error: unknown) {
-  console.error("[signupAction] profile persistence failed", {
-    stage,
-    userId,
+function logSignupAuthError(requestId: string, error: unknown) {
+  logger({
+    level: "error",
+    message: "signup_auth_failed",
+    requestId,
+    action: "signupAction",
+    metadata: {
+      name: getErrorExtra(error, "name"),
+      message: getErrorExtra(error, "message"),
+      status: getErrorExtra(error, "status"),
+      code: getErrorExtra(error, "code"),
+      cause: getErrorExtra(error, "cause"),
+    },
     error,
   });
 }
 
-function createProfileServiceClient(userId: string | undefined) {
+function logSignupProfileError(requestId: string, stage: string, userId: string | undefined, error: unknown) {
+  logger({
+    level: "error",
+    message: "signup_profile_persistence_failed",
+    requestId,
+    userId,
+    action: "signupAction",
+    metadata: {
+      stage,
+    },
+    error,
+  });
+}
+
+function createProfileServiceClient(userId: string | undefined, requestId: string) {
   try {
     return createServiceRoleSupabaseClient();
   } catch (error) {
-    logSignupProfileError("service_role_client.create", userId, error);
-    console.error("Missing SUPABASE_SERVICE_ROLE_KEY for server-side profile persistence");
-    errorRedirect("/cadastro", "Conta criada, mas não foi possível preparar seu perfil. Configure a service role no servidor.");
+    logSignupProfileError(requestId, "service_role_client.create", userId, error);
+    errorRedirect("/cadastro", createSafeErrorMessage("Conta criada, mas não foi possível preparar seu perfil.", requestId));
   }
 }
 
 export async function signupAction(formData: FormData) {
+  const requestId = createRequestId();
   const input = parseSignupForm(formData);
   const validationError = validateSignupInput(input);
 
@@ -72,21 +86,21 @@ export async function signupAction(formData: FormData) {
   });
 
   if (error) {
-    logSignupAuthError(error);
-    errorRedirect("/cadastro", "Não foi possível criar sua conta. Verifique os dados e tente novamente.");
+    logSignupAuthError(requestId, error);
+    errorRedirect("/cadastro", createSafeErrorMessage("Não foi possível criar sua conta.", requestId));
   }
 
   const userId = data.user?.id;
 
   if (!userId) {
-    logSignupProfileError("auth.signUp_missing_user_id", undefined, {
+    logSignupProfileError(requestId, "auth.signUp_missing_user_id", undefined, {
       message: "Supabase Auth did not return data.user.id after signup.",
     });
-    errorRedirect("/cadastro", "Conta criada, mas não foi possível identificar seu usuário. Verifique a confirmação de e-mail.");
+    errorRedirect("/cadastro", createSafeErrorMessage("Conta criada, mas não foi possível identificar seu usuário.", requestId));
   }
 
   const now = new Date().toISOString();
-  const serviceClient = createProfileServiceClient(userId);
+  const serviceClient = createProfileServiceClient(userId, requestId);
   const { error: profileUpsertError } = await serviceClient.from("profiles").upsert(
     {
       id: userId,
@@ -102,8 +116,8 @@ export async function signupAction(formData: FormData) {
   );
 
   if (profileUpsertError) {
-    logSignupProfileError("profiles.upsert_service_role", userId, profileUpsertError);
-    errorRedirect("/cadastro", "Conta criada, mas não foi possível salvar seu perfil. Verifique a service role no servidor.");
+    logSignupProfileError(requestId, "profiles.upsert_service_role", userId, profileUpsertError);
+    errorRedirect("/cadastro", createSafeErrorMessage("Conta criada, mas não foi possível salvar seu perfil.", requestId));
   }
 
   redirect("/onboarding");

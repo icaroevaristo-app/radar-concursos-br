@@ -51,6 +51,15 @@ const exampleJson = `{
       "description": "Período de inscrições",
       "is_estimated": false,
       "confidence_score": 0.95
+    },
+    {
+      "contest_title": "Concurso Público Prefeitura de Minaçu/GO 2026",
+      "event_type": "exam",
+      "date_start": "2026-09-13",
+      "date_end": null,
+      "description": "Data de prova",
+      "is_estimated": false,
+      "confidence_score": 0.9
     }
   ]
 }`;
@@ -168,6 +177,7 @@ export function ImportContestsForm() {
             }
           >
             <p className="font-bold">{result.message}</p>
+            {result.requestId ? <p className="mt-1 text-xs opacity-80">Request ID: {result.requestId}</p> : null}
             {result.summary ? (
               <ul className="mt-2 space-y-1">
                 <li>{result.summary.contestsCreated} concursos importados</li>
@@ -201,6 +211,7 @@ export function ImportContestsForm() {
             </p>
           ) : (
             <div className="mt-4 space-y-3">
+              {validation.requestId ? <p className="text-xs text-muted-foreground">Request ID: {validation.requestId}</p> : null}
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="premium-panel-subtle p-3">
                   <p className="font-display text-2xl font-black">{validation.totals.contests}</p>
@@ -227,7 +238,8 @@ export function ImportContestsForm() {
                 </Badge>
               </div>
               <p className="text-xs leading-5 text-muted-foreground">
-                Datas com `event_type: &quot;registration&quot;` são convertidas em `registration_start` e `registration_end` quando houver início e fim.
+                Datas com `event_type: &quot;registration&quot;` são convertidas em `registration_start` e `registration_end`.
+                Datas com `event_type: &quot;exam&quot;` são salvas como `exam_date`.
               </p>
             </div>
           )}
