@@ -8,7 +8,7 @@ Este documento é um handoff técnico para outra IA ou outro desenvolvedor conti
 
 O Radar Concursos BR é um web app independente para organizar e acompanhar concursos públicos municipais/estaduais a partir de fontes públicas. O produto não é órgão oficial, não representa governos, bancas ou prefeituras, e sempre orienta o usuário a conferir o edital/link oficial.
 
-A Sprint 1 entregou a fundação funcional do produto:
+A Sprint 1 está funcionalmente concluída e entregou a fundação do produto:
 
 - Next.js App Router com TypeScript e Tailwind CSS.
 - Supabase Auth.
@@ -24,6 +24,7 @@ A Sprint 1 entregou a fundação funcional do produto:
 - Audit logs básicos.
 - Testes unitários básicos com Vitest.
 - Polimento visual premium inspirado no protótipo, sem usar o HTML empacotado como base.
+- Preparação documental para GitHub, Supabase e Vercel.
 
 Ainda não há crawler, IA, pagamento, notificações reais, upload real de PDF, OCR, WhatsApp, Telegram, scraping nacional, banco de questões, simulados, comunidade ou app nativo.
 
@@ -46,6 +47,8 @@ Comandos principais:
 npm install
 npm run dev
 npm run dev:turbo
+npm run build
+npm run start
 npm run lint
 npm run typecheck
 npm run test
@@ -487,7 +490,56 @@ Não implementar na Sprint 1:
 - Comunidade.
 - Novas tabelas.
 
-## 17. Pendências Para Próxima Etapa
+## 17. Preparação Para Deploy
+
+Arquivos de apoio:
+
+- `.env.example`
+- `README.md`
+- `docs/DEPLOY_CHECKLIST.md`
+- `docs/SPRINT_1_QA_CHECKLIST.md`
+
+GitHub:
+
+- Inicializar repositório, se necessário.
+- Garantir que `.env.local` não seja commitado.
+- Fazer commit da fundação da Sprint 1.
+- Enviar para repositório remoto.
+
+Supabase:
+
+- Aplicar migrations `0001` e `0002`.
+- Aplicar seed demo apenas se desejado.
+- Configurar Auth com Site URL e Redirect URLs de desenvolvimento e produção.
+- Criar primeiro owner/admin manualmente em `public.admin_users`.
+
+Vercel:
+
+- Importar projeto do GitHub.
+- Configurar `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` e `NEXT_PUBLIC_APP_URL`.
+- Usar install command `npm install`.
+- Usar build command `npm run build`.
+- Após deploy, atualizar Supabase Auth com a URL real.
+
+Validar depois do deploy:
+
+1. `/api/health`.
+2. Cadastro.
+3. Login.
+4. Onboarding.
+5. Radar.
+6. Detalhes do concurso.
+7. Salvar/remover concurso.
+8. Meus Concursos.
+9. Bloqueio de `/admin` para usuário comum.
+10. Acesso admin para owner/admin.
+11. CRUD manual de fonte.
+12. CRUD manual de concurso, cargo e data.
+13. Publicar/despublicar.
+14. `audit_logs`.
+15. Aviso de não-oficialidade visível.
+
+## 18. Pendências Para Sprint 2
 
 Prioridade recomendada antes da Sprint 2:
 
@@ -505,7 +557,7 @@ Sprint 2 sugerida:
 - Criar entidades de documentos brutos, se necessário.
 - Manter cobertura restrita e sem scraping nacional.
 
-## 18. Última Validação Conhecida
+## 19. Última Validação Conhecida
 
 Após o polimento visual, os comandos abaixo foram executados:
 
@@ -513,6 +565,7 @@ Após o polimento visual, os comandos abaixo foram executados:
 npm run lint
 npm run typecheck
 npm run test
+npm run build
 npm audit --audit-level=moderate
 ```
 
@@ -521,4 +574,5 @@ Resultado:
 - `npm run lint`: passou.
 - `npm run typecheck`: passou.
 - `npm run test`: passou com 4 arquivos e 13 testes.
+- `npm run build`: passou com Next.js 16.2.6.
 - `npm audit --audit-level=moderate`: passou, `found 0 vulnerabilities`.
