@@ -200,6 +200,9 @@ function validateDate(input: ImportContestDateInput, index: number, contestTitle
   if (!eventType) errors.push(`${dateErrorPrefix(index)}.event_type inválido.`);
   if (!isValidDateString(dateStart)) errors.push(`${dateErrorPrefix(index)}.date_start inválido.`);
   if (!isValidDateString(dateEnd)) errors.push(`${dateErrorPrefix(index)}.date_end inválido.`);
+  if (eventType === "exam_date" && !dateStart && !isEstimated) {
+    errors.push(`${dateErrorPrefix(index)}.date_start é obrigatório para data de prova.`);
+  }
   if (!dateStart && !dateEnd && !isEstimated) {
     errors.push(`${dateErrorPrefix(index)}.date_start é obrigatório quando a data é conhecida.`);
   }

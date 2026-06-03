@@ -90,6 +90,10 @@ export function normalizeContestDateEventType(value: unknown) {
     return "registration";
   }
 
+  if (raw === "exam") {
+    return "exam_date";
+  }
+
   return contestDateEventTypes.includes(raw as (typeof contestDateEventTypes)[number])
     ? (raw as (typeof contestDateEventTypes)[number])
     : null;
