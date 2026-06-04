@@ -39,6 +39,8 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_GA_MEASUREMENT_ID=
+NEXT_PUBLIC_META_PIXEL_ID=
 ```
 
 Regras:
@@ -47,6 +49,19 @@ Regras:
 - `SUPABASE_SERVICE_ROLE_KEY` é server-side apenas. Nunca exponha em Client Components, logs, browser ou repositório público.
 - Em desenvolvimento, use `NEXT_PUBLIC_APP_URL=http://localhost:3000`.
 - Em produção, use `NEXT_PUBLIC_APP_URL=https://SEU-DOMINIO`.
+
+## Analytics e Funil
+
+O app possui eventos internos simples via `/api/events` e suporte opcional a GA4/Meta Pixel para trafego pago.
+
+Variaveis opcionais:
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+- `NEXT_PUBLIC_META_PIXEL_ID`
+
+Se ficarem vazias, GA4 e Meta Pixel nao carregam. Os eventos nao enviam nome, e-mail, telefone, chaves, cookies ou dados sensiveis para analytics.
+
+Eventos principais: `landing_view`, `click_create_free_alert`, `click_view_contests`, `contest_list_viewed`, `contest_card_clicked`, `signup_started`, `signup_completed`, `onboarding_completed`, `preferences_viewed`, `preferences_updated`, `contest_viewed` e `official_link_clicked`.
 
 ## Supabase Auth
 

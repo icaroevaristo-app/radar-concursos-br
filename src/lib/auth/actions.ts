@@ -121,7 +121,15 @@ export async function signupAction(formData: FormData) {
     errorRedirect("/cadastro", createSafeErrorMessage("Conta criada, mas não foi possível salvar seu perfil.", requestId));
   }
 
-  redirect("/onboarding");
+  logger({
+    level: "info",
+    message: "signup_completed",
+    requestId,
+    userId,
+    action: "signupAction",
+  });
+
+  redirect("/onboarding?signup=completed");
 }
 
 export async function loginAction(formData: FormData) {
@@ -235,7 +243,7 @@ export async function onboardingAction(formData: FormData) {
     },
   });
 
-  redirect("/radar");
+  redirect("/radar/boas-vindas");
 }
 
 export async function updatePreferencesAction(formData: FormData) {

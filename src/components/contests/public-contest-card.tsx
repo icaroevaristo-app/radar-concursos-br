@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarDays, GraduationCap, MapPin, Trophy } from "lucide-react";
 import { formatRegistrationEnd, formatSalary, valueOrNotInformed } from "@/lib/contests/formatters";
+import { TrackedLink } from "@/components/analytics/track-event";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ContestStatusBadge } from "@/components/contests/contest-status-badge";
 import type { ContestWithRelations } from "@/types/contest";
@@ -45,9 +45,18 @@ export function PublicContestCard({ contest }: PublicContestCardProps) {
         </div>
 
         <div className="mt-4 flex flex-1 flex-col justify-end">
-          <Button asChild href={`/concursos/${contest.id}`} variant="outline">
+          <TrackedLink
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-border bg-card/50 px-4 text-sm font-bold text-foreground transition hover:border-primary/55 hover:bg-primary/5 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+            event="contest_card_clicked"
+            href={`/concursos/${contest.id}`}
+            metadata={{
+              contestId: contest.id,
+              isDemo: contest.is_demo,
+              status: contest.status,
+            }}
+          >
             Ver detalhes <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-          </Button>
+          </TrackedLink>
         </div>
       </div>
     </Card>

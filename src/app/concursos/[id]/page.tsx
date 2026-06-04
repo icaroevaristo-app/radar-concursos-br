@@ -10,9 +10,9 @@ import { calculateContestMatch } from "@/lib/contests/match";
 import { formatRegistrationEnd, valueOrNotInformed } from "@/lib/contests/formatters";
 import { createRequestId, logger } from "@/lib/logger";
 import { PageShell } from "@/components/layout/page-shell";
+import { TrackEventOnMount, TrackedLink } from "@/components/analytics/track-event";
 import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ContestRoleList } from "@/components/contests/contest-role-list";
 import { ContestDateList } from "@/components/contests/contest-date-list";
@@ -57,6 +57,14 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
       title={contest.title}
       description="Dados organizados pelo Radar. Valide tudo no link oficial antes de tomar qualquer decisão."
     >
+      <TrackEventOnMount
+        event="contest_viewed"
+        metadata={{
+          contestId: contest.id,
+          isDemo: contest.is_demo,
+          status: contest.status,
+        }}
+      />
       <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-5">
           <Card className="overflow-hidden p-0">
@@ -126,13 +134,24 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
                   </Link>
                 </>
               ) : (
-                <Button asChild className="w-full" href="/cadastro">
+                <TrackedLink
+                  className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_12px_30px_rgb(245_158_11_/_0.18)] transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  event="click_create_free_alert"
+                  href="/cadastro"
+                  metadata={{ location: "contest_details", contestId: contest.id }}
+                >
                   Criar alerta gratuito
-                </Button>
+                </TrackedLink>
               )}
-              <Button asChild className="w-full" href={contest.official_url} target="_blank" variant="outline">
+              <TrackedLink
+                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border border-border bg-card/50 px-4 text-sm font-bold text-foreground transition hover:border-primary/55 hover:bg-primary/5 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                event="official_link_clicked"
+                href={contest.official_url}
+                metadata={{ contestId: contest.id, isDemo: contest.is_demo, status: contest.status }}
+                target="_blank"
+              >
                 Link oficial <ExternalLink className="h-4 w-4" />
-              </Button>
+              </TrackedLink>
             </div>
           </Card>
           <Card className="h-fit p-5">

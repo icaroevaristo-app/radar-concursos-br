@@ -1,5 +1,6 @@
 import { ArrowRight, Bell, Filter, ShieldCheck } from "lucide-react";
 import { getPublishedContests } from "@/lib/contests/queries";
+import { TrackEventOnMount, TrackedLink } from "@/components/analytics/track-event";
 import { PublicContestCard } from "@/components/contests/public-contest-card";
 import { PageShell } from "@/components/layout/page-shell";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ export default async function PublicContestsPage() {
       title="Veja concursos publicados no Radar"
       description="Lista pública com concursos abertos ou futuros vindos do Supabase. Para filtros por perfil, cidade, escolaridade e áreas, crie seu alerta gratuito."
     >
+      <TrackEventOnMount event="contest_list_viewed" metadata={{ contestsCount: publicContests.length }} />
       <div className="mb-6 grid gap-4 lg:grid-cols-[1fr_22rem]">
         <Card className="p-5">
           <h2 className="font-display text-xl font-black">Não perca mais prazo de concurso público.</h2>
@@ -23,9 +25,14 @@ export default async function PublicContestsPage() {
             fonte oficial antes da inscrição.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <Button asChild href="/cadastro">
+            <TrackedLink
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_12px_30px_rgb(245_158_11_/_0.18)] transition hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              event="click_create_free_alert"
+              href="/cadastro"
+              metadata={{ location: "public_contests" }}
+            >
               Criar alerta gratuito <ArrowRight className="h-4 w-4" />
-            </Button>
+            </TrackedLink>
             <Button asChild href="/login" variant="outline">
               Já tenho conta
             </Button>

@@ -26,6 +26,7 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
       description="Ajuste cidade, UF, escolaridade, áreas e cargos para recalcular seu Radar com dados salvos no Supabase."
     >
       <TrackEventOnMount event="preferences_viewed" metadata={{ source: "preferences_page" }} />
+      {success ? <TrackEventOnMount event="preferences_updated" metadata={{ source: "preferences_redirect" }} /> : null}
       <PreferencesForm
         action={updatePreferencesAction}
         error={error}

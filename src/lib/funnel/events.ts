@@ -2,9 +2,13 @@ export const funnelEvents = [
   "landing_view",
   "click_create_free_alert",
   "click_view_contests",
+  "contest_list_viewed",
+  "contest_card_clicked",
   "signup_started",
+  "signup_completed",
   "onboarding_completed",
   "contest_viewed",
+  "official_link_clicked",
   "preferences_viewed",
   "preferences_updated",
 ] as const;
