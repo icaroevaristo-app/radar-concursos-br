@@ -16,8 +16,8 @@ export function AppFooter() {
             Radar <span className="text-primary">Concursos</span> BR
           </p>
           <p className="mt-1 max-w-2xl leading-6">
-            Plataforma informativa independente. Não somos site oficial do governo; confirme sempre as informações na
-            fonte oficial antes da inscrição.
+            O Radar Concursos BR é uma plataforma informativa independente. Não somos site oficial do governo. Confira
+            sempre edital, banca ou órgão responsável antes da inscrição.
           </p>
         </div>
         <nav className="flex flex-wrap gap-3">

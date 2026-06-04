@@ -18,7 +18,7 @@ export default async function EditSourcePage({ params, searchParams }: EditSourc
   if (!source) notFound();
 
   return (
-    <PageShell eyebrow="Admin" title={`Editar fonte: ${source.name}`} description="Crawler e IA permanecem fora do escopo desta Sprint 1.">
+    <PageShell eyebrow="Admin" title={`Editar fonte: ${source.name}`} description="Atualize dados da fonte usada na curadoria de concursos.">
       <Card className="mx-auto max-w-3xl p-6 shadow-glow">
         {error ? <p className="mb-4 rounded-md border border-danger/30 bg-danger/10 p-3 text-sm text-red-200">{error}</p> : null}
         <form action={updateSourceAction} className="grid gap-4 md:grid-cols-2">

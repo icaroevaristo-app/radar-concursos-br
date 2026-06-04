@@ -162,8 +162,8 @@ export function PreferencesForm({ action, error, footnote, profile, preferences,
         </section>
 
         <section className="premium-panel-subtle p-4">
-          <h2 className="font-display text-lg font-bold">Alertas preparados</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Nenhuma notificação real é enviada nesta versão.</p>
+          <h2 className="font-display text-lg font-bold">Avisos e preferências</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Escolha como deseja acompanhar oportunidades compatíveis com seu perfil.</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <fieldset>
               <legend className="form-label">Canais</legend>
@@ -186,7 +186,7 @@ export function PreferencesForm({ action, error, footnote, profile, preferences,
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-muted-foreground">
-            {footnote ?? "O match é simples, sem IA e sem cálculo real de distância."}
+            {footnote ?? "Essas preferências ajudam o Radar a encontrar concursos mais compatíveis com seu perfil."}
           </p>
           <Button type="submit">{submitLabel}</Button>
         </div>

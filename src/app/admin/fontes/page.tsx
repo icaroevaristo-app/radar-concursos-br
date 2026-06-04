@@ -9,9 +9,9 @@ export default async function AdminFontesPage() {
   const { sources, error } = await getAdminSources();
 
   return (
-    <PageShell eyebrow="Admin" title="Fontes" description="Cadastro manual de fontes. Nenhum crawler é executado nesta Sprint 1.">
+    <PageShell eyebrow="Admin" title="Fontes" description="Cadastre e organize fontes oficiais, bancas e portais de concursos.">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">{sources.length} fontes cadastradas no Supabase.</p>
+        <p className="text-sm text-muted-foreground">{sources.length} fontes cadastradas.</p>
         <Button asChild href="/admin/fontes/nova">
           Nova fonte
         </Button>

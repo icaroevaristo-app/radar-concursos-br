@@ -67,7 +67,7 @@ const shortcutCards = [
   {
     href: "/admin/alertas",
     label: "Alertas WhatsApp",
-    description: "Gerar fila semi-manual para assinantes Premium.",
+    description: "Gerar e acompanhar avisos para assinantes Premium.",
     icon: MessageCircle,
   },
 ];
@@ -75,7 +75,7 @@ const shortcutCards = [
 const comingSoonCards = [
   { label: "Logs e auditoria", description: "Consulta visual de audit_logs.", icon: Activity },
   { label: "Usuários", description: "Gestão operacional de contas.", icon: Users },
-  { label: "Checkout/webhooks", description: "Preparado para Mercado Pago futuro.", icon: Sparkles },
+  { label: "Pagamentos", description: "Gestão financeira avançada em planejamento.", icon: Sparkles },
 ];
 
 export default async function AdminPage() {

@@ -4,7 +4,6 @@ import { TrackEventOnMount, TrackedLink } from "@/components/analytics/track-eve
 import { AppHeader } from "@/components/layout/app-header";
 import { AppFooter } from "@/components/layout/app-footer";
 import { PublicContestCard } from "@/components/contests/public-contest-card";
-import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
@@ -158,8 +157,7 @@ export default async function Home() {
               <p className="section-kicker">Concursos no Radar</p>
               <h2 className="mt-2 font-display text-3xl font-black">Oportunidades publicadas no banco</h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-                Estes cards são carregados de concursos reais publicados no Supabase. Registros internos de teste ficam ocultos na área
-                pública.
+                Estes cards mostram oportunidades revisadas e publicadas no Radar.
               </p>
             </div>
             <TrackedLink
@@ -209,8 +207,7 @@ export default async function Home() {
             <Badge variant="amber">Radar Premium</Badge>
             <h2 className="mt-4 font-display text-2xl font-black">Mais controle para quem acompanha muitos editais.</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              O Premium começa com teste grátis e gestão manual. Cobrança automática, webhook e WhatsApp real ainda não
-              estão ativos.
+              Comece com 7 dias grátis e acompanhe oportunidades com mais controle. Depois, continue por R$ 9,90/mês.
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {premiumBenefits.map((benefit) => (
@@ -232,8 +229,6 @@ export default async function Home() {
             </Card>
           ))}
         </div>
-
-        <NonOfficialNotice className="mt-12" />
       </section>
       <AppFooter />
     </main>

@@ -25,7 +25,7 @@ export default async function AdminSubscriptionsPage() {
     <PageShell
       eyebrow="Admin"
       title="Assinaturas"
-      description="Gestão manual inicial do Radar Premium. Checkout e webhooks reais ainda não foram implementados."
+      description="Acompanhe assinaturas do Radar Premium e ajuste status quando necessário."
     >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{subscriptions.length} assinatura(s) cadastrada(s).</p>

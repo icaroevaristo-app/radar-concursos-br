@@ -14,15 +14,15 @@ export default async function PublicContestsPage() {
     <PageShell
       eyebrow="Concursos abertos"
       title="Veja concursos publicados no Radar"
-      description="Lista pública com concursos abertos ou futuros vindos do Supabase. Para filtros por perfil, cidade, escolaridade e áreas, configure seu Radar gratuito."
+      description="Veja concursos públicos abertos ou com inscrições futuras confirmadas. Configure seu Radar gratuito para acompanhar oportunidades por perfil, cidade, escolaridade e área."
     >
       <TrackEventOnMount event="contest_list_viewed" metadata={{ contestsCount: publicContests.length }} />
       <div className="mb-6 grid gap-4 lg:grid-cols-[1fr_22rem]">
         <Card className="p-5">
           <h2 className="font-display text-xl font-black">Não perca mais prazo de concurso público.</h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Acompanhe concursos abertos e futuros em Goiás e no Centro-Oeste. As informações devem ser conferidas na
-            fonte oficial antes da inscrição.
+            Acompanhe concursos abertos e futuros em Goiás e no Centro-Oeste. Antes de se inscrever, confira sempre a
+            fonte oficial.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <TrackedLink
@@ -46,11 +46,11 @@ export default async function PublicContestsPage() {
             </div>
             <div className="flex gap-3">
               <Bell className="mt-0.5 h-5 w-5 flex-none text-primary" />
-              <p>Configure seu Radar para acompanhar oportunidades compatíveis com seu perfil.</p>
+              <p>Receba alertas por WhatsApp sobre oportunidades compatíveis com seu perfil no Premium.</p>
             </div>
             <div className="flex gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-primary" />
-              <p>Não somos um site oficial do governo. Sempre confira edital, banca ou órgão responsável.</p>
+              <p>Veja edital, banca ou órgão responsável antes de tomar qualquer decisão.</p>
             </div>
           </div>
         </Card>
@@ -66,7 +66,7 @@ export default async function PublicContestsPage() {
       {!error && !publicContests.length ? (
         <div className="empty-state">
           <h2 className="font-display text-lg font-bold text-foreground">Nenhum concurso publicado agora</h2>
-          <p className="mt-2">Quando o admin publicar concursos reais no Supabase, eles aparecerão aqui.</p>
+          <p className="mt-2">Novas oportunidades aparecerão aqui assim que forem revisadas e publicadas.</p>
         </div>
       ) : null}
 

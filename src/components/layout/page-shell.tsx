@@ -1,6 +1,5 @@
 import { AppHeader } from "@/components/layout/app-header";
 import { AppFooter } from "@/components/layout/app-footer";
-import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 
 type PageShellProps = {
   title: string;
@@ -24,7 +23,6 @@ export function PageShell({ title, eyebrow, description, children }: PageShellPr
       </section>
       <section className="mx-auto max-w-6xl px-4 py-8">
         {children}
-        <NonOfficialNotice className="mt-10" />
       </section>
       <AppFooter />
     </main>

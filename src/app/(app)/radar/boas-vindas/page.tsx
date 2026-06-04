@@ -62,14 +62,14 @@ export default async function RadarWelcomePage() {
             <CheckCircle2 className="h-5 w-5 text-primary" />
             <h2 className="mt-3 font-display text-lg font-bold">Pronto para usar</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              O Radar usa suas preferências para calcular um match simples com concursos publicados no Supabase.
+              O Radar usa suas preferências para destacar concursos mais compatíveis com seu perfil.
             </p>
           </Card>
           <Card className="p-5">
             <Bell className="h-5 w-5 text-primary" />
             <h2 className="mt-3 font-display text-lg font-bold">Premium em breve</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Recursos premium serão disponibilizados futuramente. Ainda não há cobrança, assinatura ou envio externo de notificações.
+              O Premium ajuda você a acompanhar oportunidades com mais controle, salvos ilimitados e alertas por WhatsApp.
             </p>
           </Card>
           <Card className="p-5">

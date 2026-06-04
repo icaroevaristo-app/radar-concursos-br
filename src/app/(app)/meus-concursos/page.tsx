@@ -15,7 +15,7 @@ export default async function MeusConcursosPage() {
     <PageShell
       eyebrow="Área do usuário"
       title="Meus concursos"
-      description="Concursos salvos por você, lidos de saved_contests no Supabase. Nenhum usuário vê salvos de outra conta."
+      description="Acompanhe em um só lugar os concursos que você salvou para consultar depois."
     >
       <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-4">

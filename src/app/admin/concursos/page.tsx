@@ -16,7 +16,7 @@ export default async function AdminConcursosPage() {
       description="Cadastro manual de concursos. Publicados aparecem no Radar; despublicados ficam ocultos para usuários comuns."
     >
       <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <p className="text-sm text-muted-foreground">{contests.length} concursos cadastrados no Supabase.</p>
+        <p className="text-sm text-muted-foreground">{contests.length} concursos cadastrados.</p>
         <div className="flex flex-wrap gap-2">
           <Button asChild href="/admin" variant="ghost">
             <ArrowLeft className="h-4 w-4" />

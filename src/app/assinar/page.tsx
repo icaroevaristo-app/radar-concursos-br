@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Clock, MessageCircle, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Sparkles } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { getTrialDaysRemaining, getUserSubscription, isSubscriptionPremium } from "@/lib/subscriptions/queries";
 import { startPremiumTrialAction } from "@/lib/subscriptions/actions";
@@ -40,24 +40,20 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
     <PageShell
       eyebrow="Radar Premium"
       title="Receba alertas de concursos antes do prazo acabar"
-      description="7 dias grátis, depois R$ 9,90/mês. Cancele quando quiser. Lançamento inicial focado em Goiás e Centro-Oeste."
+      description="Comece com 7 dias grátis. Depois, continue por R$ 9,90/mês. Cancele quando quiser."
     >
-      {error ? (
-        <Card className="mb-5 border-danger/35 bg-danger/10 p-4 text-sm text-red-100">
-          {error}
-        </Card>
-      ) : null}
+      {error ? <Card className="mb-5 border-danger/35 bg-danger/10 p-4 text-sm text-red-100">{error}</Card> : null}
 
       <div className="grid gap-5 lg:grid-cols-[1fr_24rem]">
-        <section className="space-y-5">
+        <section>
           <Card className="overflow-hidden p-6 shadow-glow">
             <Badge variant="amber">7 dias grátis</Badge>
             <h2 className="mt-4 max-w-3xl font-display text-3xl font-black tracking-tight md:text-5xl">
-              Configure seu Radar Premium por R$ 9,90/mês.
+              Acompanhe concursos compatíveis com seu perfil.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-              Acompanhe oportunidades com curadoria manual, filtros por perfil e alertas por WhatsApp em MVP semi-manual. Sem
-              promessa de aprovação, vaga ou resultado garantido.
+              Tenha uma visão mais organizada das oportunidades em Goiás e no Centro-Oeste, com filtros, salvos ilimitados
+              e avisos por WhatsApp para o seu Radar.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -101,18 +97,8 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
               </p>
             ) : null}
             {user && subscription?.status === "trialing" && !checkoutUrl ? (
-              <p className="mt-2 text-sm text-primary">Checkout em configuração. Entre em contato para ativar.</p>
+              <p className="mt-2 text-sm text-primary">Para continuar com o Premium após o teste, fale com o suporte.</p>
             ) : null}
-          </Card>
-
-          <Card className="p-5">
-            <div className="flex gap-3">
-              <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-primary" />
-              <p className="text-sm leading-6 text-muted-foreground">
-                O Radar Concursos BR não é site oficial do governo. Sempre confira edital, banca ou órgão responsável
-                antes de se inscrever.
-              </p>
-            </div>
           </Card>
         </section>
 
@@ -126,7 +112,20 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
 
           <Card className="p-5">
             <MessageCircle className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">Benefícios Premium</h2>
+            <h2 className="mt-3 font-display text-lg font-bold">Alertas por WhatsApp</h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">
+              Receba avisos sobre concursos compatíveis com seu perfil.
+            </p>
+          </Card>
+
+          <Card className="p-5">
+            <CreditCard className="h-5 w-5 text-primary" />
+            <h2 className="mt-3 font-display text-lg font-bold">Pagamento seguro</h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">Assine o Radar Premium com checkout seguro.</p>
+          </Card>
+
+          <Card className="p-5">
+            <h2 className="font-display text-lg font-bold">Benefícios Premium</h2>
             <div className="mt-4 space-y-3">
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex gap-3 text-sm leading-6 text-muted-foreground">
@@ -138,10 +137,8 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
           </Card>
 
           <Card className="p-5">
-            <Clock className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">Sem pressa</h2>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Você pode começar pelo teste grátis e acompanhar sua assinatura em{" "}
+            <p className="text-sm leading-6 text-muted-foreground">
+              Você pode acompanhar sua assinatura em{" "}
               <Link className="text-primary underline-offset-4 hover:underline" href="/minha-conta/assinatura">
                 Minha assinatura
               </Link>

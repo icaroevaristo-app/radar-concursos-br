@@ -27,7 +27,6 @@ import {
 import { createRequestId, logger } from "@/lib/logger";
 import { PageShell } from "@/components/layout/page-shell";
 import { TrackEventOnMount, TrackedLink } from "@/components/analytics/track-event";
-import { NonOfficialNotice } from "@/components/shared/non-official-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -230,8 +229,6 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
             </div>
             <ContestDateList dates={contest.dates} />
           </Card>
-
-          <NonOfficialNotice />
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">

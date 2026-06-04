@@ -15,7 +15,7 @@ const sections = [
     paragraphs: [
       "Usamos os dados para autenticação, personalização do Radar, exibição de concursos mais relevantes, melhoria do produto, segurança da plataforma e comunicação futura sobre novidades do Radar.",
       "Quando o usuário informar telefone e der consentimento explícito, podemos usar esse número para enviar alertas de concursos por WhatsApp sobre oportunidades compatíveis com suas preferências.",
-      "Nesta fase, os alertas por WhatsApp são um MVP semi-manual. Não prometemos envio automático instantâneo nem integração real com WhatsApp Cloud API neste pacote.",
+      "Os alertas por WhatsApp dependem das preferências cadastradas, da disponibilidade do serviço e da revisão das oportunidades antes do envio.",
     ],
   },
   {
@@ -29,14 +29,14 @@ const sections = [
   {
     title: "4. Dados sensíveis",
     paragraphs: [
-      "O MVP do Radar Concursos BR não deve solicitar CPF, RG, documentos pessoais, endereço completo, dados bancários ou outras informações sensíveis para uso básico da plataforma.",
+      "O Radar Concursos BR não deve solicitar CPF, RG, documentos pessoais, endereço completo, dados bancários ou outras informações sensíveis para uso básico da plataforma.",
       "Se algum formulário parecer pedir dados além do necessário, o usuário deve interromper o preenchimento e entrar em contato pelo canal oficial.",
     ],
   },
   {
     title: "5. Cookies e tecnologias semelhantes",
     paragraphs: [
-      "Podemos usar cookies e tecnologias semelhantes para manter sessão de login, segurança, funcionamento do Supabase Auth e preferências básicas da aplicação.",
+      "Podemos usar cookies e tecnologias semelhantes para manter sessão de login, segurança e preferências básicas da aplicação.",
       "Logs técnicos e eventos simples podem ser registrados para entender falhas, proteger o serviço e melhorar a experiência.",
     ],
   },
@@ -50,8 +50,8 @@ const sections = [
   {
     title: "7. Atualizações futuras",
     paragraphs: [
-      "No futuro, ferramentas como analytics, pixel, checkout, pagamento, WhatsApp Cloud API ou serviços de comunicação podem ser integradas. Caso isso aconteça, esta política deverá ser atualizada antes ou junto da ativação dessas integrações.",
-      "Não tratamos essas ferramentas como ativas nesta versão se elas ainda não estiverem implementadas no produto.",
+      "Esta política pode ser atualizada quando novos recursos, meios de pagamento, ferramentas de comunicação ou serviços de análise forem adicionados ao produto.",
+      "Quando houver mudanças relevantes no tratamento de dados, buscaremos manter esta página clara e atualizada.",
     ],
   },
 ];

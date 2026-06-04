@@ -39,7 +39,7 @@ export default async function AdminWhatsAppAlertsPage({ searchParams }: AdminWha
     <PageShell
       eyebrow="Admin"
       title="Alertas WhatsApp"
-      description="Fila semi-manual para assinantes Premium. Nenhuma API real de WhatsApp é chamada por esta tela."
+      description="Gerencie avisos por WhatsApp para assinantes Premium com consentimento ativo."
     >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{alerts.length} alerta(s) recentes na fila.</p>

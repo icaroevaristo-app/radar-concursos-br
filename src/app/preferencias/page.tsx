@@ -23,14 +23,14 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
     <PageShell
       eyebrow="Meu Radar"
       title="Editar preferências"
-      description="Ajuste cidade, UF, escolaridade, áreas e cargos para recalcular seu Radar com dados salvos no Supabase."
+      description="Ajuste cidade, UF, escolaridade, áreas e cargos para encontrar concursos mais compatíveis com seu perfil."
     >
       <TrackEventOnMount event="preferences_viewed" metadata={{ source: "preferences_page" }} />
       {success ? <TrackEventOnMount event="preferences_updated" metadata={{ source: "preferences_redirect" }} /> : null}
       <PreferencesForm
         action={updatePreferencesAction}
         error={error}
-        footnote="As alterações atualizam seu perfil e suas preferências. Nenhuma notificação real é enviada nesta versão."
+        footnote="Essas preferências ajudam o Radar a encontrar concursos mais compatíveis com seu perfil."
         profile={profile}
         preferences={preferences}
         submitLabel="Salvar alterações"

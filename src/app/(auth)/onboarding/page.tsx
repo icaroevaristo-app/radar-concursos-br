@@ -23,7 +23,7 @@ export default async function OnboardingPage({ searchParams }: OnboardingPagePro
     <PageShell
       eyebrow="Preferências"
       title="Configure seu Radar"
-      description="Essas preferências alimentam o match simples da Sprint 1. Você pode ajustar os dados depois."
+      description="Essas preferências ajudam o Radar a encontrar concursos mais compatíveis com seu perfil. Você pode ajustar os dados depois."
     >
       {signup === "completed" ? <TrackEventOnMount event="signup_completed" metadata={{ source: "signup_redirect" }} /> : null}
       <PreferencesForm

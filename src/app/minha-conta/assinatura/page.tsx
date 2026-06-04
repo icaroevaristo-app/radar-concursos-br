@@ -1,4 +1,4 @@
-import { CreditCard, Mail, Sparkles } from "lucide-react";
+import { CreditCard, Mail, MessageCircle } from "lucide-react";
 import { contactEmail, contactMailto } from "@/lib/contact";
 import { requireUser } from "@/lib/auth";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
@@ -104,16 +104,16 @@ export default async function SubscriptionAccountPage({ searchParams }: Subscrip
         <aside className="space-y-4">
           <Card className="p-5">
             <CreditCard className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">Checkout externo</h2>
+            <h2 className="mt-3 font-display text-lg font-bold">Pagamento</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              O checkout real ainda depende de configuração externa. Webhooks de pagamento não foram implementados neste pacote.
+              Gerencie sua assinatura Premium e acompanhe o período de teste grátis.
             </p>
           </Card>
           <Card className="p-5">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">WhatsApp semi-manual</h2>
+            <MessageCircle className="h-5 w-5 text-primary" />
+            <h2 className="mt-3 font-display text-lg font-bold">Alertas por WhatsApp</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Alertas por WhatsApp aparecem como recurso Premium, mas o envio ainda é operacional e manual pelo admin.
+              Receba alertas por WhatsApp sobre concursos compatíveis com suas preferências.
             </p>
           </Card>
           <Card className="p-5">

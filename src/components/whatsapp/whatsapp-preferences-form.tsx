@@ -28,8 +28,8 @@ export function WhatsAppPreferencesForm({ error, isPremium, preferences, success
 
       <h2 className="mt-4 font-display text-xl font-bold">Receba alertas por WhatsApp</h2>
       <p className="mt-2 text-sm leading-6 text-muted-foreground">
-        MVP semi-manual para assinantes Premium. O admin prepara a fila e envia/copía mensagens manualmente, sem WhatsApp
-        Cloud API real neste pacote.
+        Receba alertas por WhatsApp sobre concursos compatíveis com suas preferências. Você pode ativar ou desativar esse
+        aviso quando quiser.
       </p>
 
       {error ? <div className="mt-4 rounded-md border border-danger/30 bg-danger/10 px-3 py-2 text-sm text-red-200">{error}</div> : null}
@@ -68,7 +68,7 @@ export function WhatsAppPreferencesForm({ error, isPremium, preferences, success
 
         {!isPremium ? (
           <p className="rounded-md border border-primary/25 bg-primary/10 p-3 text-sm text-amber-50">
-            O telefone é opcional para usuários gratuitos. Alertas por WhatsApp entram na fila apenas para Premium ou teste grátis ativo.
+            O telefone é opcional para usuários gratuitos. Alertas por WhatsApp fazem parte do Radar Premium.
           </p>
         ) : null}
 

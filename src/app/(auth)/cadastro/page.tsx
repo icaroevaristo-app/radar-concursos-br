@@ -86,14 +86,13 @@ export default async function CadastroPage({ searchParams }: CadastroPageProps) 
         </Card>
 
         <Card className="p-6">
-          <Badge variant="amber">Sprint 1</Badge>
+          <Badge variant="amber">Conta gratuita</Badge>
           <h2 className="mt-4 font-display text-2xl font-black">Cadastro sem excesso de dados</h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            A conta cria um usuário real no Supabase Auth e persiste o profile no servidor. A senha nunca é armazenada
-            manualmente pela aplicação.
+            Comece com dados mínimos, configure seu Radar e acompanhe oportunidades compatíveis com seu perfil.
           </p>
           <div className="mt-6 grid gap-3 text-sm">
-            {["Auth real", "Aceites salvos no profile", "Onboarding obrigatório", "Admin separado por tabela"].map((item) => (
+            {["Dados mínimos", "Preferências personalizadas", "Concursos salvos", "Premium opcional"].map((item) => (
               <div key={item} className="premium-panel-subtle px-3 py-2 text-muted-foreground">
                 {item}
               </div>

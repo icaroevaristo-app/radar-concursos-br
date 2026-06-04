@@ -17,7 +17,7 @@ type RadarPageProps = {
 
 const tabs = [
   { href: "/radar", key: "all", label: "Todos", description: "Abertos e futuros" },
-  { href: "/radar?tab=strong", key: "strong", label: "Match forte", description: "Mais aderentes" },
+  { href: "/radar?tab=strong", key: "strong", label: "Alta compatibilidade", description: "Mais aderentes" },
   { href: "/radar?tab=new", key: "new", label: "Novos", description: "Últimos 7 dias" },
   { href: "/radar?tab=ending", key: "ending", label: "Encerrando", description: "Próximos 15 dias" },
 ];
@@ -56,7 +56,6 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
     const registrationEnd = getRegistrationEndDate(contest.dates);
     return isWithinNextDays(registrationEnd ? getDateValue(registrationEnd) : null, 15);
   }).length;
-  const hasDemo = contestsWithMatch.some(({ contest }) => contest.is_demo);
   const locationLabel = [profile?.city, profile?.state].filter(Boolean).join("/");
   const currentTab = tabs.find((item) => item.key === tab) ?? tabs[0];
 
@@ -64,7 +63,7 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
     <PageShell
       eyebrow="Radar"
       title="Concursos compatíveis"
-      description="Concursos publicados lidos do Supabase, com match simples baseado nas suas preferências."
+      description="Concursos publicados com base nas suas preferências de cidade, escolaridade, área e cargo."
     >
       <section className="mb-6 overflow-hidden rounded-lg border border-primary/25 bg-gradient-to-br from-primary/15 via-card/90 to-card p-5 shadow-glow md:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -78,7 +77,7 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
               Acompanhe oportunidades com menos ruído.
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground md:text-base">
-              Use as abas para priorizar matches fortes, concursos novos e inscrições próximas do fim. As informações
+              Use as abas para priorizar concursos mais aderentes, oportunidades novas e inscrições próximas do fim. As informações
               continuam dependendo da fonte oficial antes de qualquer decisão.
             </p>
           </div>
@@ -105,9 +104,9 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
           },
           {
             icon: Target,
-            label: "Match forte",
+            label: "Alta compatibilidade",
             value: strongMatches,
-            helper: "Score acima de 70",
+            helper: "Mais aderentes ao perfil",
             tone: "text-success",
           },
           {
@@ -139,13 +138,6 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
           </Card>
         ))}
       </section>
-
-      {hasDemo ? (
-        <div className="mb-5 rounded-lg border border-primary/25 bg-primary/10 p-4 text-sm leading-6 text-amber-50">
-          Alguns concursos exibidos vieram do seed demo do Supabase e estão marcados como demonstração. Eles não indicam
-          oportunidades reais em aberto.
-        </div>
-      ) : null}
 
       <nav aria-label="Filtros do Radar" className="mb-5 overflow-x-auto border-b border-border/60 pb-3">
         <div className="flex min-w-max gap-2">
@@ -217,24 +209,23 @@ export default async function RadarPage({ searchParams }: RadarPageProps) {
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
           <Card className="h-fit p-5">
             <Radar className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">Match Sprint 1</h2>
+            <h2 className="mt-3 font-display text-lg font-bold">Compatibilidade</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Pontuação simples por estado, cidade, escolaridade, cargo/área, salário e cadastro reserva. Sem IA e sem
-              distância real.
+              O Radar prioriza concursos que combinam com suas preferências de local, escolaridade, cargo, área e salário.
             </p>
           </Card>
           <Card className="h-fit p-5">
             <CalendarDays className="h-5 w-5 text-primary" />
             <h2 className="mt-3 font-display text-lg font-bold">Aba Encerrando</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Usa datas reais de `contest_dates` com evento `registration_end` nos próximos 15 dias.
+              Mostra concursos com fim de inscrições previsto para os próximos 15 dias.
             </p>
           </Card>
           <Card className="h-fit p-5">
             <Sparkles className="h-5 w-5 text-primary" />
-            <h2 className="mt-3 font-display text-lg font-bold">Próximo ganho</h2>
+            <h2 className="mt-3 font-display text-lg font-bold">Quer melhorar o Radar?</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Filtros persistentes e ajustes de preferências sem sair do Radar.
+              Atualize suas preferências sempre que mudar de cidade, área de interesse ou escolaridade.
             </p>
           </Card>
         </aside>

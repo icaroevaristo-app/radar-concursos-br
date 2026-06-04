@@ -19,14 +19,14 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <PageShell
       eyebrow="Autenticação"
       title="Entre no seu Radar"
-      description="Acesse com e-mail e senha pelo Supabase Auth. Usuários sem onboarding completo serão enviados para preferências."
+      description="Acesse sua conta para acompanhar concursos, preferências, salvos e assinatura."
     >
       <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-[0.9fr_1.1fr]">
         <Card className="p-6">
           <Badge variant="amber">Acesso seguro</Badge>
           <h2 className="mt-4 font-display text-2xl font-black">Sessão protegida</h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            O app usa sessão Supabase com cookies no App Router. Rotas como Radar, Meus Concursos e Admin continuam protegidas.
+            Sua conta mantém suas preferências, concursos salvos e acesso ao Radar Premium em um só lugar.
           </p>
           <div className="mt-6 rounded-lg border border-primary/20 bg-primary/10 p-4 text-sm leading-6 text-amber-50">
             O Radar é independente e sempre orienta a conferência na fonte oficial.
