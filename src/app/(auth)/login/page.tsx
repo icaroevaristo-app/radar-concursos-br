@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { LockKeyhole } from "lucide-react";
-import { loginAction } from "@/lib/auth/actions";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,11 +8,12 @@ import { Card } from "@/components/ui/card";
 type LoginPageProps = {
   searchParams: Promise<{
     error?: string;
+    next?: string;
   }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const { error } = await searchParams;
+  const { error, next } = await searchParams;
 
   return (
     <PageShell
@@ -50,7 +50,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </div>
           ) : null}
 
-          <form action={loginAction} className="space-y-4">
+          <form action="/auth/login" className="space-y-4" method="post">
+            {next ? <input name="next" type="hidden" value={next} /> : null}
             <label className="block">
               <span className="form-label">E-mail</span>
               <input className="form-control" name="email" required type="email" />

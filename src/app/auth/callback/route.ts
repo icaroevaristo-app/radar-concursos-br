@@ -1,13 +1,21 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createRouteHandlerSupabaseClient } from "@/lib/supabase/route-handler";
+
+function safeNextPath(value: string | null) {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) {
+    return null;
+  }
+
+  return value;
+}
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next");
+  const next = safeNextPath(requestUrl.searchParams.get("next"));
 
   if (code) {
-    const supabase = await createServerSupabaseClient();
+    const { supabase, applyCookies } = createRouteHandlerSupabaseClient(request);
     await supabase.auth.exchangeCodeForSession(code);
 
     const {
@@ -21,9 +29,11 @@ export async function GET(request: NextRequest) {
         .eq("id", user.id)
         .maybeSingle();
 
-      return NextResponse.redirect(new URL(next ?? (profile?.onboarding_completed ? "/radar" : "/onboarding"), requestUrl.origin));
+      return applyCookies(
+        NextResponse.redirect(new URL(next ?? (profile?.onboarding_completed ? "/radar" : "/onboarding"), requestUrl.origin), 303),
+      );
     }
   }
 
-  return NextResponse.redirect(new URL("/login", requestUrl.origin));
+  return NextResponse.redirect(new URL("/login", requestUrl.origin), 303);
 }

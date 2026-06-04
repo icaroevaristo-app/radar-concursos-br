@@ -8,6 +8,16 @@ function startsWithAny(pathname: string, prefixes: string[]) {
   return prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
+function redirectWithCookies(url: URL, responseWithCookies: NextResponse) {
+  const redirectResponse = NextResponse.redirect(url);
+
+  responseWithCookies.cookies.getAll().forEach((cookie) => {
+    redirectResponse.cookies.set(cookie);
+  });
+
+  return redirectResponse;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const response = NextResponse.next({
@@ -31,7 +41,7 @@ export async function middleware(request: NextRequest) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login";
     redirectUrl.searchParams.set("next", pathname);
-    return NextResponse.redirect(redirectUrl);
+    return redirectWithCookies(redirectUrl, response);
   }
 
   if (!user) {
@@ -50,14 +60,14 @@ export async function middleware(request: NextRequest) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/onboarding";
     redirectUrl.search = "";
-    return NextResponse.redirect(redirectUrl);
+    return redirectWithCookies(redirectUrl, response);
   }
 
   if (onboardingCompleted && isAuthPage) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/radar";
     redirectUrl.search = "";
-    return NextResponse.redirect(redirectUrl);
+    return redirectWithCookies(redirectUrl, response);
   }
 
   if (isAdminRoute) {
@@ -67,7 +77,7 @@ export async function middleware(request: NextRequest) {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = "/radar";
       redirectUrl.search = "";
-      return NextResponse.redirect(redirectUrl);
+      return redirectWithCookies(redirectUrl, response);
     }
   }
 

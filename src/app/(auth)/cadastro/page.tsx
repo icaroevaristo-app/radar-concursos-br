@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { UserPlus } from "lucide-react";
-import { signupAction } from "@/lib/auth/actions";
 import { TrackEventOnMount } from "@/components/analytics/track-event";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
@@ -41,7 +40,7 @@ export default async function CadastroPage({ searchParams }: CadastroPageProps) 
             </div>
           ) : null}
 
-          <form action={signupAction} className="space-y-4">
+          <form action="/auth/signup" className="space-y-4" method="post">
             <label className="block">
               <span className="form-label">Nome completo</span>
               <input className="form-control" name="full_name" required />
