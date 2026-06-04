@@ -44,9 +44,11 @@ export async function AppHeader() {
               <Badge className="hidden max-w-52 truncate sm:inline-flex" variant="muted">
                 {displayName}
               </Badge>
-              <Button asChild href="/logout" size="sm" variant="ghost">
-                Sair
-              </Button>
+              <form action="/logout" method="post">
+                <Button size="sm" type="submit" variant="ghost">
+                  Sair
+                </Button>
+              </form>
             </>
           ) : (
             <>

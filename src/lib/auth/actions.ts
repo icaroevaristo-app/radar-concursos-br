@@ -167,12 +167,6 @@ export async function loginAction(formData: FormData) {
   redirect(profile?.onboarding_completed ? "/radar" : "/onboarding");
 }
 
-export async function logoutAction() {
-  const supabase = await createServerSupabaseClient();
-  await supabase.auth.signOut();
-  redirect("/login");
-}
-
 export async function onboardingAction(formData: FormData) {
   const input = parseOnboardingForm(formData);
   const validationError = validateOnboardingInput(input);
