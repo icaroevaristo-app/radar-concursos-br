@@ -8,6 +8,7 @@ import {
   FilePlus2,
   FileText,
   HeartPulse,
+  MessageCircle,
   Plus,
   ShieldCheck,
   Sparkles,
@@ -62,6 +63,12 @@ const shortcutCards = [
     label: "Assinaturas",
     description: "Gerenciar status manual do Radar Premium.",
     icon: CreditCard,
+  },
+  {
+    href: "/admin/alertas",
+    label: "Alertas WhatsApp",
+    description: "Gerar fila semi-manual para assinantes Premium.",
+    icon: MessageCircle,
   },
 ];
 

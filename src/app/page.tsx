@@ -37,6 +37,7 @@ const benefits = [
 ];
 
 const premiumBenefits = [
+  "Alertas por WhatsApp sobre oportunidades compatíveis",
   "Acompanhamento personalizado por cidade, UF, escolaridade e área",
   "Salvar concursos ilimitados",
   "Filtros avançados",

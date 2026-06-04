@@ -106,6 +106,22 @@ async function hydrateContests(contests: ContestWithRelations["id"] extends stri
   }));
 }
 
+export async function hydrateContestsByIds(contestIds: string[]) {
+  if (!contestIds.length) return [] as ContestWithRelations[];
+
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase.from("contests").select("*").in("id", contestIds);
+
+  return hydrateContests(
+    (data ?? []).map((contest) => ({
+      ...contest,
+      roles: [],
+      dates: [],
+      source: null,
+    })),
+  );
+}
+
 export async function getPublishedContests() {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase

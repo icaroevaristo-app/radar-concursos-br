@@ -62,6 +62,10 @@ export type Database = {
           accepts_remote_or_other_city_exam: boolean;
           notification_channels: string[];
           notification_frequency: string;
+          whatsapp_phone: string | null;
+          whatsapp_opt_in: boolean;
+          whatsapp_opt_in_at: string | null;
+          whatsapp_opt_out_at: string | null;
           created_at: string;
           updated_at: string;
         },
@@ -80,6 +84,10 @@ export type Database = {
           accepts_remote_or_other_city_exam?: boolean;
           notification_channels?: string[];
           notification_frequency?: string;
+          whatsapp_phone?: string | null;
+          whatsapp_opt_in?: boolean;
+          whatsapp_opt_in_at?: string | null;
+          whatsapp_opt_out_at?: string | null;
           created_at?: string;
           updated_at?: string;
         }
@@ -288,6 +296,36 @@ export type Database = {
           canceled_at?: string | null;
           created_at?: string;
           updated_at?: string;
+        }
+      >;
+      whatsapp_alerts: PublicTable<
+        {
+          id: string;
+          user_id: string;
+          contest_id: string;
+          phone: string;
+          message: string;
+          status: "pending" | "copied" | "sent" | "failed" | "canceled";
+          created_at: string;
+          sent_at: string | null;
+          copied_at: string | null;
+          canceled_at: string | null;
+          error_message: string | null;
+          created_by: string | null;
+        },
+        {
+          id?: string;
+          user_id: string;
+          contest_id: string;
+          phone: string;
+          message: string;
+          status?: "pending" | "copied" | "sent" | "failed" | "canceled";
+          created_at?: string;
+          sent_at?: string | null;
+          copied_at?: string | null;
+          canceled_at?: string | null;
+          error_message?: string | null;
+          created_by?: string | null;
         }
       >;
       audit_logs: PublicTable<

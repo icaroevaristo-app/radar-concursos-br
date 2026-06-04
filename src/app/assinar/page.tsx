@@ -15,7 +15,7 @@ type SubscribePageProps = {
 };
 
 const benefits = [
-  "Alertas por WhatsApp em breve",
+  "Receba alertas por WhatsApp sobre oportunidades compatíveis com seu perfil",
   "Preferências por UF, cidade, escolaridade e área",
   "Concursos futuros destacados",
   "Salvar concursos ilimitados",
@@ -56,7 +56,7 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
               Configure seu Radar Premium por R$ 9,90/mês.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-              Acompanhe oportunidades com curadoria manual, filtros por perfil e recursos premium em evolução. Sem
+              Acompanhe oportunidades com curadoria manual, filtros por perfil e alertas por WhatsApp em MVP semi-manual. Sem
               promessa de aprovação, vaga ou resultado garantido.
             </p>
 
