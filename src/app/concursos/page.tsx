@@ -14,7 +14,7 @@ export default async function PublicContestsPage() {
     <PageShell
       eyebrow="Concursos abertos"
       title="Veja concursos publicados no Radar"
-      description="Lista pública com concursos abertos ou futuros vindos do Supabase. Para filtros por perfil, cidade, escolaridade e áreas, crie seu alerta gratuito."
+      description="Lista pública com concursos abertos ou futuros vindos do Supabase. Para filtros por perfil, cidade, escolaridade e áreas, configure seu Radar gratuito."
     >
       <TrackEventOnMount event="contest_list_viewed" metadata={{ contestsCount: publicContests.length }} />
       <div className="mb-6 grid gap-4 lg:grid-cols-[1fr_22rem]">
@@ -31,7 +31,7 @@ export default async function PublicContestsPage() {
               href="/cadastro"
               metadata={{ location: "public_contests" }}
             >
-              Criar alerta gratuito <ArrowRight className="h-4 w-4" />
+              Criar meu Radar gratuito <ArrowRight className="h-4 w-4" />
             </TrackedLink>
             <Button asChild href="/login" variant="outline">
               Já tenho conta
@@ -42,11 +42,11 @@ export default async function PublicContestsPage() {
           <div className="space-y-4 text-sm text-muted-foreground">
             <div className="flex gap-3">
               <Filter className="mt-0.5 h-5 w-5 flex-none text-primary" />
-              <p>Filtros personalizados ficam disponíveis após o onboarding gratuito.</p>
+              <p>Filtros personalizados ficam disponíveis após configurar seu Radar gratuito.</p>
             </div>
             <div className="flex gap-3">
               <Bell className="mt-0.5 h-5 w-5 flex-none text-primary" />
-              <p>Alertas reais ainda não são enviados nesta versão; as preferências já ficam salvas.</p>
+              <p>Configure seu Radar para acompanhar oportunidades compatíveis com seu perfil.</p>
             </div>
             <div className="flex gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5 flex-none text-primary" />
@@ -66,9 +66,7 @@ export default async function PublicContestsPage() {
       {!error && !publicContests.length ? (
         <div className="empty-state">
           <h2 className="font-display text-lg font-bold text-foreground">Nenhum concurso publicado agora</h2>
-          <p className="mt-2">
-            Quando o admin publicar concursos no Supabase, eles aparecerão aqui. O seed demo também pode ser usado para testes.
-          </p>
+          <p className="mt-2">Quando o admin publicar concursos reais no Supabase, eles aparecerão aqui.</p>
         </div>
       ) : null}
 

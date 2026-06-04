@@ -140,7 +140,6 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-4xl">
             <div className="flex flex-wrap items-center gap-2">
-              {contest.is_demo ? <Badge variant="amber">Seed/demo</Badge> : null}
               <ContestStatusBadge status={contest.status} />
               {user ? (
                 <Badge variant={matchVariant(match.matchLevel)}>
@@ -165,7 +164,7 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
                 href="/cadastro"
                 metadata={{ location: "contest_details", contestId: contest.id }}
               >
-                Criar alerta gratuito
+                Criar meu Radar gratuito
               </TrackedLink>
             )}
             <TrackedLink
@@ -263,7 +262,7 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
           <Card className="h-fit p-5">
             <h2 className="font-display text-lg font-bold">Seu acompanhamento</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Salve o concurso para acompanhar depois em Meus Concursos. O Radar não envia alertas reais nesta versão.
+              Salve o concurso para acompanhar depois em Meus Concursos e manter suas oportunidades organizadas.
             </p>
             <div className="mt-4 space-y-3">
               {user ? (
@@ -275,7 +274,7 @@ export default async function ContestDetailsPage({ params }: ContestDetailsPageP
                 </>
               ) : (
                 <Button asChild className="w-full" href="/cadastro">
-                  Criar alerta gratuito
+                  Criar meu Radar gratuito
                 </Button>
               )}
             </div>

@@ -41,6 +41,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_GA_MEASUREMENT_ID=
 NEXT_PUBLIC_META_PIXEL_ID=
+NEXT_PUBLIC_CONTACT_EMAIL=
 ```
 
 Regras:
@@ -49,6 +50,7 @@ Regras:
 - `SUPABASE_SERVICE_ROLE_KEY` é server-side apenas. Nunca exponha em Client Components, logs, browser ou repositório público.
 - Em desenvolvimento, use `NEXT_PUBLIC_APP_URL=http://localhost:3000`.
 - Em produção, use `NEXT_PUBLIC_APP_URL=https://SEU-DOMINIO`.
+- `NEXT_PUBLIC_CONTACT_EMAIL` é opcional e aparece em Termos/Privacidade. Se ficar vazio, o app usa `radarconcursosbr@gmail.com`.
 
 ## Analytics e Funil
 

@@ -1,7 +1,6 @@
 import { ArrowRight, CalendarDays, GraduationCap, MapPin, Trophy } from "lucide-react";
 import { formatRegistrationEnd, formatSalary, valueOrNotInformed } from "@/lib/contests/formatters";
 import { TrackedLink } from "@/components/analytics/track-event";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ContestStatusBadge } from "@/components/contests/contest-status-badge";
 import type { ContestWithRelations } from "@/types/contest";
@@ -17,7 +16,6 @@ export function PublicContestCard({ contest }: PublicContestCardProps) {
     <Card className="group flex h-full flex-col overflow-hidden p-0 transition hover:border-primary/50 hover:shadow-glow">
       <div className="border-b border-border/70 bg-gradient-to-r from-primary/10 via-card to-card p-4">
         <div className="flex flex-wrap items-center gap-2">
-          {contest.is_demo ? <Badge variant="amber">Demo</Badge> : null}
           <ContestStatusBadge status={contest.status} />
         </div>
         <h3 className="mt-3 font-display text-xl font-black tracking-tight">{contest.title}</h3>

@@ -1,3 +1,4 @@
+import { ArrowLeft, Database, FileJson, Plus } from "lucide-react";
 import { publishContestAction, unpublishContestAction } from "@/lib/admin/actions";
 import { getAdminContests } from "@/lib/admin/queries";
 import { PageShell } from "@/components/layout/page-shell";
@@ -14,13 +15,23 @@ export default async function AdminConcursosPage() {
       title="Concursos"
       description="Cadastro manual de concursos. Publicados aparecem no Radar; despublicados ficam ocultos para usuários comuns."
     >
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <p className="text-sm text-muted-foreground">{contests.length} concursos cadastrados no Supabase.</p>
         <div className="flex flex-wrap gap-2">
+          <Button asChild href="/admin" variant="ghost">
+            <ArrowLeft className="h-4 w-4" />
+            Painel admin
+          </Button>
+          <Button asChild href="/admin/fontes" variant="outline">
+            <Database className="h-4 w-4" />
+            Gerenciar fontes
+          </Button>
           <Button asChild href="/admin/concursos/importar" variant="outline">
+            <FileJson className="h-4 w-4" />
             Importar JSON
           </Button>
           <Button asChild href="/admin/concursos/novo">
+            <Plus className="h-4 w-4" />
             Novo concurso
           </Button>
         </div>

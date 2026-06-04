@@ -43,6 +43,42 @@ function sortContests(contests: ContestWithRelations[]) {
   });
 }
 
+function normalizeText(value: string | null) {
+  return value
+    ?.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function hasExampleOfficialUrl(contest: Pick<ContestWithRelations, "official_url">) {
+  try {
+    return new URL(contest.official_url).hostname.toLowerCase().includes("example.com");
+  } catch {
+    return contest.official_url.toLowerCase().includes("example.com");
+  }
+}
+
+function isDemoOrSeedContest(contest: Pick<ContestWithRelations, "is_demo" | "official_url" | "title" | "summary">) {
+  const title = normalizeText(contest.title) ?? "";
+  const summary = normalizeText(contest.summary) ?? "";
+
+  return (
+    Boolean(contest.is_demo) ||
+    hasExampleOfficialUrl(contest) ||
+    title.includes("seed") ||
+    title.includes("demo") ||
+    summary.includes("seed") ||
+    summary.includes("demo") ||
+    summary.includes("demonstrativo") ||
+    summary.includes("demonstracao")
+  );
+}
+
+function isPublicContest(contest: ContestWithRelations) {
+  return contest.publication_status === "published" && ["open", "upcoming"].includes(contest.status) && !isDemoOrSeedContest(contest);
+}
+
 async function hydrateContests(contests: ContestWithRelations["id"] extends string ? ContestWithRelations[] : never) {
   if (!contests.length) return [];
 
@@ -72,7 +108,11 @@ async function hydrateContests(contests: ContestWithRelations["id"] extends stri
 
 export async function getPublishedContests() {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.from("contests").select("*").eq("publication_status", "published");
+  const { data, error } = await supabase
+    .from("contests")
+    .select("*")
+    .eq("publication_status", "published")
+    .in("status", ["open", "upcoming"]);
 
   if (error) {
     return { contests: [] as ContestWithRelations[], error };
@@ -86,7 +126,7 @@ export async function getPublishedContests() {
   }));
 
   return {
-    contests: sortContests(await hydrateContests(baseContests)),
+    contests: sortContests((await hydrateContests(baseContests)).filter(isPublicContest)),
     error: null,
   };
 }
@@ -98,9 +138,10 @@ export async function getContestById(id: string) {
     .select("*")
     .eq("id", id)
     .eq("publication_status", "published")
+    .in("status", ["open", "upcoming"])
     .maybeSingle();
 
-  if (error || !data) {
+  if (error || !data || isDemoOrSeedContest(data)) {
     return null;
   }
 
@@ -113,7 +154,7 @@ export async function getContestById(id: string) {
     },
   ]);
 
-  return contest ?? null;
+  return contest && isPublicContest(contest) ? contest : null;
 }
 
 export async function getCurrentUserPreferences() {
@@ -178,6 +219,7 @@ export async function getSavedContestsForUser(userId: string) {
     .from("contests")
     .select("*")
     .eq("publication_status", "published")
+    .in("status", ["open", "upcoming"])
     .in("id", contestIds);
 
   const hydrated = await hydrateContests(
@@ -188,7 +230,7 @@ export async function getSavedContestsForUser(userId: string) {
       source: null,
     })),
   );
-  const contestsById = new Map(hydrated.map((contest) => [contest.id, contest]));
+  const contestsById = new Map(hydrated.filter(isPublicContest).map((contest) => [contest.id, contest]));
   const savedContests = savedRows
     .map((saved) => {
       const contest = contestsById.get(saved.contest_id);

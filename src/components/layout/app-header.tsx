@@ -1,20 +1,25 @@
 import Link from "next/link";
-import { getCurrentProfile, getCurrentUser } from "@/lib/auth";
+import { getCurrentAdminUser, getCurrentProfile, getCurrentUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const navItems = [
-  { href: "/concursos", label: "Concursos" },
+const publicNavItems = [{ href: "/concursos", label: "Concursos" }];
+
+const authenticatedNavItems = [
   { href: "/radar", label: "Radar" },
   { href: "/preferencias", label: "Preferências" },
   { href: "/meus-concursos", label: "Meus concursos" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export async function AppHeader() {
   const user = await getCurrentUser();
-  const profile = user ? await getCurrentProfile() : null;
+  const [profile, adminUser] = user ? await Promise.all([getCurrentProfile(), getCurrentAdminUser()]) : [null, null];
   const displayName = profile?.full_name ?? user?.email ?? null;
+  const navItems = [
+    ...publicNavItems,
+    ...(user ? authenticatedNavItems : []),
+    ...(adminUser ? [{ href: "/admin", label: "Admin" }] : []),
+  ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/86 backdrop-blur-xl">
@@ -56,7 +61,7 @@ export async function AppHeader() {
                 Entrar
               </Button>
               <Button asChild href="/cadastro" size="sm">
-                Criar alerta
+                Criar meu Radar
               </Button>
             </>
           )}

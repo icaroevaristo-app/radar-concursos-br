@@ -1,3 +1,4 @@
+import { contactEmail, contactMailto } from "@/lib/contact";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card } from "@/components/ui/card";
 
@@ -12,15 +13,15 @@ const sections = [
   {
     title: "2. Como usamos esses dados",
     paragraphs: [
-      "Usamos os dados para autenticação, personalização do Radar, exibição de concursos mais relevantes, melhoria do produto, segurança da plataforma e comunicação futura sobre alertas ou novidades.",
-      "Nesta versão, alertas reais e notificações externas ainda não estão ativos.",
+      "Usamos os dados para autenticação, personalização do Radar, exibição de concursos mais relevantes, melhoria do produto, segurança da plataforma e comunicação futura sobre novidades do Radar.",
+      "A plataforma permite configurar preferências para acompanhar oportunidades compatíveis com o seu perfil. Envios externos de notificações dependem de funcionalidades futuras.",
     ],
   },
   {
     title: "3. Dados sensíveis",
     paragraphs: [
       "O MVP do Radar Concursos BR não deve solicitar CPF, RG, documentos pessoais, endereço completo, dados bancários ou outras informações sensíveis para uso básico da plataforma.",
-      "Se algum formulário parecer pedir dados além do necessário, o usuário deve interromper o preenchimento e entrar em contato pelo canal oficial quando disponível.",
+      "Se algum formulário parecer pedir dados além do necessário, o usuário deve interromper o preenchimento e entrar em contato pelo canal oficial.",
     ],
   },
   {
@@ -33,7 +34,7 @@ const sections = [
   {
     title: "5. Correção e exclusão",
     paragraphs: [
-      "O usuário pode solicitar correção ou exclusão de dados pessoais pelo canal de contato oficial quando ele estiver disponível.",
+      "O usuário pode solicitar correção ou exclusão de dados pessoais pelo canal de contato oficial.",
       "Alguns registros técnicos ou administrativos podem precisar ser mantidos por segurança, prevenção de abuso ou cumprimento de obrigações aplicáveis.",
     ],
   },
@@ -42,12 +43,6 @@ const sections = [
     paragraphs: [
       "No futuro, ferramentas como analytics, pixel, checkout, pagamento ou serviços de comunicação podem ser integradas. Caso isso aconteça, esta política deverá ser atualizada antes ou junto da ativação dessas integrações.",
       "Não tratamos essas ferramentas como ativas nesta versão se elas ainda não estiverem implementadas no produto.",
-    ],
-  },
-  {
-    title: "7. Contato",
-    paragraphs: [
-      "Contato provisório: contato@radarconcursosbr.example. Este endereço é um placeholder e deve ser substituído antes do uso público definitivo.",
     ],
   },
 ];
@@ -71,6 +66,18 @@ export default function PrivacyPage() {
               </div>
             </section>
           ))}
+
+          <section>
+            <h2 className="font-display text-xl font-bold">7. Contato</h2>
+            <div className="mt-3 space-y-3 text-sm leading-7 text-muted-foreground">
+              <p>Para solicitar correção, exclusão ou esclarecimentos sobre dados pessoais, use o e-mail abaixo.</p>
+              <p>
+                <a className="text-primary underline-offset-4 hover:underline" href={contactMailto}>
+                  {contactEmail}
+                </a>
+              </p>
+            </div>
+          </section>
         </div>
       </Card>
     </PageShell>

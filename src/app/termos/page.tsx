@@ -1,3 +1,4 @@
+import { contactEmail, contactMailto } from "@/lib/contact";
 import { PageShell } from "@/components/layout/page-shell";
 import { Card } from "@/components/ui/card";
 
@@ -30,13 +31,6 @@ const sections = [
       "O usuário é responsável por usar as informações com cautela e por consultar o edital oficial e o site da banca ou órgão responsável.",
     ],
   },
-  {
-    title: "5. Contato",
-    paragraphs: [
-      "Para dúvidas, correções ou solicitações relacionadas ao Radar Concursos BR, use o canal de contato oficial quando ele estiver disponível.",
-      "Contato provisório: contato@radarconcursosbr.example. Este endereço é um placeholder e deve ser substituído antes do uso público definitivo.",
-    ],
-  },
 ];
 
 export default function TermsPage() {
@@ -58,6 +52,18 @@ export default function TermsPage() {
               </div>
             </section>
           ))}
+
+          <section>
+            <h2 className="font-display text-xl font-bold">5. Contato</h2>
+            <div className="mt-3 space-y-3 text-sm leading-7 text-muted-foreground">
+              <p>Para dúvidas, correções ou solicitações relacionadas ao Radar Concursos BR, entre em contato pelo e-mail abaixo.</p>
+              <p>
+                <a className="text-primary underline-offset-4 hover:underline" href={contactMailto}>
+                  {contactEmail}
+                </a>
+              </p>
+            </div>
+          </section>
         </div>
       </Card>
     </PageShell>

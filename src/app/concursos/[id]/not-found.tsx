@@ -21,7 +21,7 @@ export default function ContestDetailsNotFound() {
             Ver concursos
           </Button>
           <Button asChild href="/cadastro" variant="outline">
-            Criar alerta gratuito
+            Criar meu Radar gratuito
           </Button>
         </div>
       </Card>

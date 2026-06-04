@@ -62,6 +62,17 @@ export async function getUserOnboardingStatus() {
   };
 }
 
+export async function getCurrentAdminUser() {
+  const user = await getCurrentUser();
+
+  if (!user) return null;
+
+  const supabase = await createServerSupabaseClient();
+  const { data } = await supabase.from("admin_users").select("user_id, role").eq("user_id", user.id).maybeSingle();
+
+  return data;
+}
+
 export async function requireAdmin() {
   const user = await requireUser();
   const supabase = await createServerSupabaseClient();

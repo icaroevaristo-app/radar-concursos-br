@@ -16,7 +16,7 @@ const secondaryCtaClass =
 
 const steps = [
   {
-    title: "Crie seu alerta gratuito",
+    title: "Crie seu Radar gratuito",
     description: "Cadastre e-mail, senha e aceite os termos. Não pedimos CPF, RG nem endereço completo.",
   },
   {
@@ -37,7 +37,7 @@ const benefits = [
 ];
 
 const premiumBenefits = [
-  "Alertas personalizados por cidade, UF, escolaridade e área",
+  "Acompanhamento personalizado por cidade, UF, escolaridade e área",
   "Salvar concursos ilimitados",
   "Filtros avançados",
   "Lembretes de fim de inscrição",
@@ -46,8 +46,7 @@ const premiumBenefits = [
 
 export default async function Home() {
   const { contests } = await getPublishedContests();
-  const examples = contests.filter((contest) => ["open", "upcoming"].includes(contest.status)).slice(0, 3);
-  const hasDemo = examples.some((contest) => contest.is_demo);
+  const examples = contests.slice(0, 3);
 
   return (
     <main className="min-h-screen overflow-hidden">
@@ -74,7 +73,7 @@ export default async function Home() {
                 href="/cadastro"
                 metadata={{ location: "hero" }}
               >
-                Criar alerta gratuito <ArrowRight className="h-4 w-4" />
+                Criar meu Radar gratuito <ArrowRight className="h-4 w-4" />
               </TrackedLink>
               <TrackedLink
                 className={secondaryCtaClass}
@@ -114,7 +113,7 @@ export default async function Home() {
               <div className="mt-6 grid gap-3">
                 {[
                   [Filter, "Filtros por cidade, UF, escolaridade e área"],
-                  [Bell, "Preferências salvas para alertas futuros"],
+                  [Bell, "Preferências salvas para acompanhamento futuro"],
                   [CheckCircle2, "Concursos salvos para acompanhar depois"],
                   [ShieldCheck, "Aviso claro de não-oficialidade"],
                 ].map(([Icon, description]) => (
@@ -156,9 +155,10 @@ export default async function Home() {
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="section-kicker">Concursos no Radar</p>
-              <h2 className="mt-2 font-display text-3xl font-black">Exemplos vindos do banco</h2>
+              <h2 className="mt-2 font-display text-3xl font-black">Oportunidades publicadas no banco</h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-                Estes cards são carregados de concursos publicados no Supabase. Dados demo continuam marcados quando usados.
+                Estes cards são carregados de concursos reais publicados no Supabase. Registros internos de teste ficam ocultos na área
+                pública.
               </p>
             </div>
             <TrackedLink
@@ -171,12 +171,6 @@ export default async function Home() {
             </TrackedLink>
           </div>
 
-          {hasDemo ? (
-            <div className="mb-5 rounded-lg border border-primary/25 bg-primary/10 p-4 text-sm text-amber-50">
-              Alguns exemplos podem vir do seed demo e não indicam oportunidades reais em aberto.
-            </div>
-          ) : null}
-
           {examples.length ? (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {examples.map((contest) => (
@@ -185,7 +179,7 @@ export default async function Home() {
             </div>
           ) : (
             <div className="empty-state">
-              Nenhum concurso publicado no momento. Quando o admin publicar concursos, eles aparecerão aqui.
+              Nenhum concurso publicado no momento. Quando o admin publicar concursos reais, eles aparecerão aqui.
             </div>
           )}
         </div>
@@ -206,7 +200,7 @@ export default async function Home() {
               href="/cadastro"
               metadata={{ location: "free_plan" }}
             >
-              Criar alerta gratuito
+              Criar meu Radar gratuito
             </TrackedLink>
           </Card>
 

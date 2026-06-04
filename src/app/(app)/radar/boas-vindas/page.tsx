@@ -27,7 +27,7 @@ export default async function RadarWelcomePage() {
     <PageShell
       eyebrow="Boas-vindas"
       title="Seu Radar foi configurado."
-      description="Agora você pode acompanhar concursos compatíveis com seu perfil. Os alertas reais ainda não estão ativos nesta versão."
+      description="Agora você pode acompanhar concursos compatíveis com seu perfil e ajustar preferências sempre que precisar."
     >
       <TrackEventOnMount event="onboarding_completed" metadata={{ source: "welcome_page" }} />
       <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
@@ -69,7 +69,7 @@ export default async function RadarWelcomePage() {
             <Bell className="h-5 w-5 text-primary" />
             <h2 className="mt-3 font-display text-lg font-bold">Premium em breve</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Alertas premium serão disponibilizados futuramente. Ainda não há cobrança, assinatura ou envio real de alerta.
+              Recursos premium serão disponibilizados futuramente. Ainda não há cobrança, assinatura ou envio externo de notificações.
             </p>
           </Card>
           <Card className="p-5">
