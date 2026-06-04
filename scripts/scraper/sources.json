@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Instituto Verbena/UFG",
+    "type": "board",
+    "base_url": "https://institutoverbena.ufg.br/",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial da banca Instituto Verbena/UFG."
+  },
+  {
+    "name": "INEP Brasil",
+    "type": "federal_agency",
+    "base_url": "https://www.gov.br/inep/pt-br",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial do INEP; usar apenas certames/processos publicados pelo orgao."
+  },
+  {
+    "name": "IDIB",
+    "type": "board",
+    "base_url": "https://idib.org.br/category/concursos/inscricoes-abertas/",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial de concursos com inscricoes abertas do IDIB."
+  },
+  {
+    "name": "Instituto Quadrix",
+    "type": "board",
+    "base_url": "https://concursos.quadrix.org.br/default.aspx",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial da area de concursos do Instituto Quadrix."
+  },
+  {
+    "name": "ITAME",
+    "type": "board",
+    "base_url": "https://itame.com.br/site/index.aspx",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial da banca ITAME."
+  },
+  {
+    "name": "IADES",
+    "type": "board",
+    "base_url": "https://www.iades.com.br/",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial do Instituto Americano de Desenvolvimento."
+  },
+  {
+    "name": "Instituto Consulplan",
+    "type": "board",
+    "base_url": "https://institutoconsulplan.org.br/index.aspx",
+    "state_scope": ["GO", "DF", "TO", "MT", "MS"],
+    "notes": "Fonte oficial do Instituto Consulplan."
+  },
+  {
+    "name": "Portal Goias Concursos",
+    "type": "official_portal",
+    "base_url": "https://selecao.go.gov.br/",
+    "state_scope": ["GO"],
+    "notes": "Portal oficial de selecao do Governo de Goias."
+  },
+  {
+    "name": "SEAD Goias",
+    "type": "state_agency",
+    "base_url": "https://goias.gov.br/administracao/concursos-publicos/",
+    "state_scope": ["GO"],
+    "notes": "Pagina oficial de concursos publicos da Secretaria de Estado da Administracao de Goias."
+  }
+]

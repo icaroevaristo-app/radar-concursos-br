@@ -1,0 +1,12 @@
+{
+  "contests": [],
+  "contest_roles": [],
+  "contest_dates": [],
+  "discarded_contests": [
+    {
+      "source_name": "scraper",
+      "official_url": null,
+      "reason": "Initial dry-run placeholder. Run scripts/scraper/scraper.py with OPENAI_API_KEY or ANTHROPIC_API_KEY to generate reviewed candidates."
+    }
+  ]
+}
