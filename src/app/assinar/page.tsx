@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, CreditCard, MessageCircle, Sparkles } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { getTrialDaysRemaining, getUserSubscription, isSubscriptionPremium } from "@/lib/subscriptions/queries";
-import { startPremiumTrialAction } from "@/lib/subscriptions/actions";
 import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +34,8 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
   const isPremium = isSubscriptionPremium(subscription);
   const daysRemaining = getTrialDaysRemaining(subscription);
   const checkoutUrl = process.env.NEXT_PUBLIC_PREMIUM_CHECKOUT_URL;
+  const canCheckout = Boolean(user && !isPremium && !subscription?.trial_start && checkoutUrl);
+  const checkoutUnavailable = Boolean(user && !isPremium && !subscription?.trial_start && !checkoutUrl);
 
   return (
     <PageShell
@@ -58,7 +59,7 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               {!user ? (
-                <Button asChild href="/cadastro" size="lg">
+                <Button asChild href="/cadastro?next=/assinar" size="lg">
                   Criar conta e começar teste grátis <ArrowRight className="h-4 w-4" />
                 </Button>
               ) : subscription?.status === "trialing" ? (
@@ -79,12 +80,14 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
                 <Button asChild href="/minha-conta/assinatura" size="lg" variant="outline">
                   Ver assinatura
                 </Button>
+              ) : checkoutUrl ? (
+                <Button asChild href={checkoutUrl} size="lg" target="_blank">
+                  Começar 7 dias grátis <ArrowRight className="h-4 w-4" />
+                </Button>
               ) : (
-                <form action={startPremiumTrialAction}>
-                  <Button size="lg" type="submit">
-                    Começar 7 dias grátis <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </form>
+                <Button disabled size="lg" type="button">
+                  Começar 7 dias grátis
+                </Button>
               )}
               <Button asChild href="/concursos" size="lg" variant="outline">
                 Ver concursos abertos
@@ -96,8 +99,13 @@ export default async function SubscribePage({ searchParams }: SubscribePageProps
                 Seu teste grátis está ativo. Restam {daysRemaining} dia(s), até {formatDate(subscription.trial_end)}.
               </p>
             ) : null}
-            {user && subscription?.status === "trialing" && !checkoutUrl ? (
-              <p className="mt-2 text-sm text-primary">Para continuar com o Premium após o teste, fale com o suporte.</p>
+            {canCheckout ? (
+              <p className="mt-4 text-sm text-muted-foreground">
+                Você será redirecionado para um checkout seguro para ativar seu teste grátis.
+              </p>
+            ) : null}
+            {checkoutUnavailable ? (
+              <p className="mt-4 text-sm text-primary">Checkout indisponível no momento. Tente novamente em instantes.</p>
             ) : null}
           </Card>
         </section>

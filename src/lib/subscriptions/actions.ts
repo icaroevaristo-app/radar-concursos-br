@@ -13,6 +13,7 @@ function addDays(date: Date, days: number) {
 }
 
 export async function startPremiumTrialAction() {
+  // Fallback operacional/manual. O fluxo público principal usa checkout configurado em NEXT_PUBLIC_PREMIUM_CHECKOUT_URL.
   const requestId = createRequestId();
   const user = await requireUser();
   const supabase = createServiceRoleSupabaseClient();

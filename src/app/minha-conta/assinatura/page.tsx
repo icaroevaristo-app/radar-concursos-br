@@ -44,6 +44,7 @@ export default async function SubscriptionAccountPage({ searchParams }: Subscrip
   ]);
   const isPremium = isSubscriptionPremium(subscription);
   const daysRemaining = getTrialDaysRemaining(subscription);
+  const checkoutUrl = process.env.NEXT_PUBLIC_PREMIUM_CHECKOUT_URL;
 
   return (
     <PageShell
@@ -92,7 +93,7 @@ export default async function SubscriptionAccountPage({ searchParams }: Subscrip
             </dl>
 
             {!isPremium ? (
-              <Button asChild className="mt-6" href="/assinar">
+              <Button asChild className="mt-6" href={checkoutUrl || "/assinar"} target={checkoutUrl ? "_blank" : undefined}>
                 Ver oferta Premium
               </Button>
             ) : null}
