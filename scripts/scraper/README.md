@@ -4,6 +4,15 @@ Este scraper consulta fontes oficiais/bancas, usa IA para estruturar concursos d
 
 Ele nao publica concursos, nao insere no Supabase e forca `publication_status: "needs_review"`.
 
+O output passa por um quality gate antes de ser salvo:
+
+- concursos com `confidence_score < 0.70` sao descartados;
+- concursos sem orgao responsavel, URL especifica, resumo, UF valida ou cidade municipal sao descartados;
+- `organization` deve ser o orgao publico, e `board` deve ser a banca;
+- roles placeholders como `string`, `N/A` e vazios sao removidos;
+- datas sem `date_start` valido sao removidas;
+- `discarded_contests` e deduplicado.
+
 ## Configuracao local
 
 Crie uma variavel de ambiente com um provedor de IA:
@@ -26,6 +35,12 @@ python scripts/scraper/scraper.py
 ```
 
 O arquivo gerado fica em `scripts/scraper/output.json`.
+
+Para rodar os testes do sanitizer:
+
+```powershell
+python -m unittest discover scripts/scraper
+```
 
 ## Deduplicacao opcional
 

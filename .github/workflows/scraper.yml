@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r scripts/scraper/requirements.txt
 
+      - name: Run scraper tests
+        run: python -m unittest discover scripts/scraper
+
       - name: Run scraper
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

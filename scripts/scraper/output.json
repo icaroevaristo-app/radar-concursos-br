@@ -6,7 +6,7 @@
     {
       "source_name": "scraper",
       "official_url": null,
-      "reason": "Initial dry-run placeholder. Run scripts/scraper/scraper.py with OPENAI_API_KEY or ANTHROPIC_API_KEY to generate reviewed candidates."
+      "reason": "dados insuficientes para importa\u00e7\u00e3o"
     }
   ]
 }
