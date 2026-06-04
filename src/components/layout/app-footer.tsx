@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const footerLinks = [
   { href: "/concursos", label: "Concursos" },
+  { href: "/assinar", label: "Premium" },
   { href: "/termos", label: "Termos de Uso" },
   { href: "/privacidade", label: "Privacidade" },
 ];

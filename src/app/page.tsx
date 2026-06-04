@@ -205,11 +205,11 @@ export default async function Home() {
           </Card>
 
           <Card className="p-6 shadow-glow">
-            <Badge variant="amber">Radar Premium em breve</Badge>
+            <Badge variant="amber">Radar Premium</Badge>
             <h2 className="mt-4 font-display text-2xl font-black">Mais controle para quem acompanha muitos editais.</h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              A estrutura visual do Premium já aparece para sinalizar o caminho do produto, mas ainda não existe cobrança,
-              checkout ou assinatura ativa.
+              O Premium começa com teste grátis e gestão manual. Cobrança automática, webhook e WhatsApp real ainda não
+              estão ativos.
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {premiumBenefits.map((benefit) => (

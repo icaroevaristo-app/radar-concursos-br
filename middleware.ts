@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createMiddlewareSupabaseClient } from "@/lib/supabase/middleware";
 
-const protectedPrefixes = ["/radar", "/onboarding", "/meus-concursos", "/conta", "/preferencias"];
+const protectedPrefixes = ["/radar", "/onboarding", "/meus-concursos", "/conta", "/minha-conta", "/preferencias"];
 const authPages = ["/login", "/cadastro"];
 
 function startsWithAny(pathname: string, prefixes: string[]) {

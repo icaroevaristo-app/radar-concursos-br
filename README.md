@@ -42,6 +42,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_GA_MEASUREMENT_ID=
 NEXT_PUBLIC_META_PIXEL_ID=
 NEXT_PUBLIC_CONTACT_EMAIL=
+NEXT_PUBLIC_PREMIUM_CHECKOUT_URL=
 ```
 
 Regras:
@@ -51,6 +52,7 @@ Regras:
 - Em desenvolvimento, use `NEXT_PUBLIC_APP_URL=http://localhost:3000`.
 - Em produção, use `NEXT_PUBLIC_APP_URL=https://SEU-DOMINIO`.
 - `NEXT_PUBLIC_CONTACT_EMAIL` é opcional e aparece em Termos/Privacidade. Se ficar vazio, o app usa `radarconcursosbr@gmail.com`.
+- `NEXT_PUBLIC_PREMIUM_CHECKOUT_URL` é opcional e abre o checkout externo do Premium quando configurado. Deixe vazio enquanto Mercado Pago/webhook não estiver pronto.
 
 ## Analytics e Funil
 
@@ -64,6 +66,18 @@ Variaveis opcionais:
 Se ficarem vazias, GA4 e Meta Pixel nao carregam. Os eventos nao enviam nome, e-mail, telefone, chaves, cookies ou dados sensiveis para analytics.
 
 Eventos principais: `landing_view`, `click_create_free_alert`, `click_view_contests`, `contest_list_viewed`, `contest_card_clicked`, `signup_started`, `signup_completed`, `onboarding_completed`, `preferences_viewed`, `preferences_updated`, `contest_viewed` e `official_link_clicked`.
+
+## Radar Premium
+
+O projeto possui uma base inicial de assinatura manual em `subscriptions`:
+
+- Oferta pública em `/assinar`: 7 dias grátis, depois R$ 9,90/mês.
+- Página protegida em `/minha-conta/assinatura`.
+- Admin em `/admin/assinaturas` para marcar status manualmente como `active`, `canceled` ou `expired`.
+- Usuário gratuito pode salvar até 3 concursos; Premium/trial ativo pode salvar ilimitado.
+- `NEXT_PUBLIC_PREMIUM_CHECKOUT_URL` pode apontar para um checkout externo quando estiver configurado.
+
+Ainda não há webhook de pagamento, Mercado Pago completo, WhatsApp API real, cobrança automática ou envio real de notificações.
 
 ## Supabase Auth
 

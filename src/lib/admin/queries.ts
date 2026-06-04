@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import type { SubscriptionRow } from "@/lib/subscriptions/types";
 import type { ContestDateRow, ContestRoleRow, ContestRow, SourceRow } from "@/types/contest";
 
 export async function getAdminDashboardData() {
@@ -75,4 +76,33 @@ export async function getSourceOptions() {
   const supabase = await createServerSupabaseClient();
   const { data } = await supabase.from("sources").select("*").order("name", { ascending: true });
   return (data ?? []) as SourceRow[];
+}
+
+export type AdminSubscriptionRow = SubscriptionRow & {
+  profile: {
+    id: string;
+    email: string | null;
+    full_name: string | null;
+  } | null;
+};
+
+export async function getAdminSubscriptions() {
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.from("subscriptions").select("*").order("created_at", { ascending: false });
+  const subscriptions = (data ?? []) as SubscriptionRow[];
+  const userIds = subscriptions.map((subscription) => subscription.user_id);
+
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, email, full_name").in("id", userIds)
+    : { data: [] };
+
+  const profilesById = new Map((profiles ?? []).map((profile) => [profile.id, profile]));
+
+  return {
+    subscriptions: subscriptions.map((subscription) => ({
+      ...subscription,
+      profile: profilesById.get(subscription.user_id) ?? null,
+    })) as AdminSubscriptionRow[],
+    error,
+  };
 }

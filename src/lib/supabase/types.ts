@@ -256,6 +256,40 @@ export type Database = {
           updated_at?: string;
         }
       >;
+      subscriptions: PublicTable<
+        {
+          id: string;
+          user_id: string;
+          provider: string;
+          provider_subscription_id: string | null;
+          status: "inactive" | "trialing" | "active" | "past_due" | "canceled" | "expired";
+          plan: "radar_premium";
+          trial_start: string | null;
+          trial_end: string | null;
+          current_period_start: string | null;
+          current_period_end: string | null;
+          cancel_at: string | null;
+          canceled_at: string | null;
+          created_at: string;
+          updated_at: string;
+        },
+        {
+          id?: string;
+          user_id: string;
+          provider?: string;
+          provider_subscription_id?: string | null;
+          status?: "inactive" | "trialing" | "active" | "past_due" | "canceled" | "expired";
+          plan?: "radar_premium";
+          trial_start?: string | null;
+          trial_end?: string | null;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          cancel_at?: string | null;
+          canceled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        }
+      >;
       audit_logs: PublicTable<
         {
           id: string;

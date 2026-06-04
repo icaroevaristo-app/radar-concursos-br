@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   Activity,
   ClipboardList,
+  CreditCard,
   Database,
   FileJson,
   FilePlus2,
@@ -56,12 +57,18 @@ const shortcutCards = [
     icon: HeartPulse,
     external: true,
   },
+  {
+    href: "/admin/assinaturas",
+    label: "Assinaturas",
+    description: "Gerenciar status manual do Radar Premium.",
+    icon: CreditCard,
+  },
 ];
 
 const comingSoonCards = [
   { label: "Logs e auditoria", description: "Consulta visual de audit_logs.", icon: Activity },
   { label: "Usuários", description: "Gestão operacional de contas.", icon: Users },
-  { label: "Assinaturas", description: "Preparado para produto futuro.", icon: Sparkles },
+  { label: "Checkout/webhooks", description: "Preparado para Mercado Pago futuro.", icon: Sparkles },
 ];
 
 export default async function AdminPage() {

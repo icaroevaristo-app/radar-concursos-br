@@ -3,12 +3,16 @@ import { getCurrentAdminUser, getCurrentProfile, getCurrentUser } from "@/lib/au
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const publicNavItems = [{ href: "/concursos", label: "Concursos" }];
+const publicNavItems = [
+  { href: "/concursos", label: "Concursos" },
+  { href: "/assinar", label: "Premium" },
+];
 
 const authenticatedNavItems = [
   { href: "/radar", label: "Radar" },
   { href: "/preferencias", label: "Preferências" },
   { href: "/meus-concursos", label: "Meus concursos" },
+  { href: "/minha-conta/assinatura", label: "Assinatura" },
 ];
 
 export async function AppHeader() {
